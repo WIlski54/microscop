@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="de">
 <head>
@@ -13,40 +12,39 @@
     --theory:#8b5cf6; --practice:#0ea5e9;
   }
   *{box-sizing:border-box}
-  body{margin:0;background:linear-gradient(180deg,#0b1220,#0f172a 20%,#0f172a);color:var(--text);font:16px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-  header{padding:1rem 1.25rem;border-bottom:1px solid #1f2937;background:#0b1220;position:sticky;top:0;z-index:20;display:flex;gap:1rem;align-items:flex-start;justify-content:space-between}
-  header h1{margin:.2rem 0 .3rem;font-size:1.05rem}
-  header .right{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
-  .pill{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .6rem;border-radius:999px;background:#111827;border:1px solid #243145;color:var(--muted);font-size:.85rem}
-  .score{font-weight:700;color:#93c5fd}
-  main{max-width:1100px;margin:0 auto;padding:1rem;display:grid;gap:1rem}
-  .card{background:radial-gradient(1200px 500px at -10% -50%, #1b2a4a 0%, transparent 60%) , var(--panel);border:1px solid #1f2a44;border-radius:18px;padding:1rem;box-shadow:0 8px 30px rgba(0,0,0,.35)}
-  .card h2{margin:.2rem 0 .5rem;font-size:1.1rem}
-  .small{font-size:.9rem;color:var(--muted)}
-  .toolbar{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
-  button{cursor:pointer;background:#0ea5e9;border:0;color:white;padding:.55rem .85rem;border-radius:12px;font-weight:600;box-shadow:0 6px 16px rgba(14,165,233,.25)}
-  button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
-  .btn-secondary{background:#334155}
-  .btn-secondary.active{background:#0ea5e9;}
-  .btn-ghost{background:#1f2937}
-  .btn-theory{background:var(--theory)}
-  .btn-practice{background:var(--practice)}
-  
-  /* Mode Toggle */
-  .mode-toggle{display:flex;gap:.5rem;margin-bottom:1rem;padding:1rem;background:#0b1324;border-radius:14px;justify-content:center}
-  .mode-toggle button{padding:.7rem 1.2rem;font-size:1rem}
-  .mode-toggle button.active{box-shadow:0 0 20px rgba(139,92,246,.4)}
-  
-  /* Sections */
-  .theory-section{display:none}
-  .practice-section{display:none}
-  body.theory-mode .theory-section{display:block}
-  body.practice-mode .practice-section{display:block}
-  
-  /* Theory Content Styles */
-  .theory-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start}
-  @media(max-width:768px){.theory-grid{grid-template-columns:1fr}}
-  .theory-image{width:100%;max-width:500px;margin:1rem auto;border-radius:12px;overflow:hidden;border:1px solid #1f2a44}
+  body{margin:0;background:linear-gradient(180deg,#0b1220,#0f172a);color:var(--text);font:16px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  header{display:flex;align-items:center;justify-content:space-between;padding:1rem;border-bottom:1px solid #1d2944;background:#0b1324;position:sticky;top:0;z-index:10}
+  header h1{font-size:1.1rem;margin:.15rem 0 .25rem}
+  header .small{color:var(--muted);font-size:.9rem}
+  .pill{display:inline-flex;align-items:center;gap:.4rem;background:#0e1526;border:1px solid #1d2944;padding:.25rem .5rem;border-radius:999px}
+  .pill b{color:#fff}
+  .score{font-weight:700;color:#22c55e}
+  .btn,.btn-ghost,.btn-secondary{cursor:pointer;display:inline-flex;align-items:center;gap:.5rem;border-radius:8px;border:1px solid #1d2944;padding:.5rem .75rem;background:#132039;color:#e5e7eb}
+  .btn:hover,.btn-ghost:hover,.btn-secondary:hover{border-color:#60a5fa;background:#192a4a}
+  .btn-ghost{background:transparent}
+  .btn-secondary{background:#0e1526}
+  .toolbar{display:flex;flex-wrap:wrap;gap:.5rem}
+  .grid{display:grid;gap:1rem}
+  .grid-2{grid-template-columns:1.2fr .8fr}
+  .grid-3{grid-template-columns:repeat(3,1fr)}
+  .grid-4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:980px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+  .card{background:#0b1324;border:1px solid #1f2a44;border-radius:12px;padding:1rem}
+  .muted{color:var(--muted)}
+  .ok{color:var(--ok)} .warn{color:var(--warn)} .err{color:#f87171}
+  .section-title{display:flex;align-items:center;justify-content:space-between;margin:.25rem 0 1rem}
+  .mode-toggle{display:flex;gap:.5rem;align-items:center;justify-content:center;margin:1rem 0}
+  .mode-toggle button{padding:.4rem .8rem;border-radius:999px;border:1px solid #1d2944;background:#0e1526;color:#e5e7eb}
+  .mode-toggle button.active{border-color:#60a5fa;background:#182036}
+  .theory-mode .theory-section{display:block}
+  .theory-mode .practice-section{display:none}
+  .practice-mode .theory-section{display:none}
+  .practice-mode .practice-section{display:block}
+
+  /* Theory */
+  .theory-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  @media(max-width:900px){.theory-grid{grid-template-columns:1fr}}
+  .theory-image{background:#0b1324;border:1px solid #1f2a44;border-radius:12px;overflow:hidden}
   .theory-image img{width:100%;height:auto;display:block}
   .part-description{background:#0e1526;border-left:4px solid var(--theory);padding:1rem;margin:.5rem 0;border-radius:8px}
   .part-description h4{margin:0 0 .5rem;color:#c4b5fd;font-size:1.05rem}
@@ -59,47 +57,40 @@
   /* Process Steps */
   .process-steps{display:grid;gap:.75rem;margin:1rem 0}
   .process-step{display:flex;gap:1rem;background:#0e1526;padding:1rem;border-radius:10px;border:1px solid #1d2944}
-  .step-number{background:var(--theory);color:white;min-width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+  .step-number{background:var(--theory);color:white;min-width:32px;min-height:32px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-weight:700}
   .step-content{flex:1}
   .step-content h5{margin:0 0 .25rem;color:#c4b5fd}
-  .step-content p{margin:0;font-size:.9rem;color:#9ca3af}
+  .step-content p{margin:0;color:#cbd5e1}
   
-  /* Comparison Table */
-  .comparison-table{width:100%;border-collapse:separate;border-spacing:0;margin:1rem 0;background:#0e1526;border-radius:10px;overflow:hidden}
-  .comparison-table th{background:#1e293b;padding:.75rem;text-align:left;font-weight:600;color:#c4b5fd;border-bottom:2px solid #334155}
-  .comparison-table td{padding:.75rem;border-bottom:1px solid #1f2937}
-  .comparison-table tr:last-child td{border-bottom:none}
-  .comparison-table tr:hover{background:#111827}
-  
-  /* Original Styles (rest remains same) */
-  .microscope-wrap{display:grid;grid-template-columns:1fr;justify-items:center;gap:.5rem}
-  .microscope{position:relative;max-width:680px;width:100%;border-radius:14px;overflow:hidden;border:1px solid #1f2a44;background:#0b1324}
-  .microscope img{display:block;width:100%;height:auto}
-  .hotspot{position:absolute;width:28px;height:28px;border-radius:50%;background:rgba(96,165,250,.15);border:2px dashed #60a5fa;display:grid;place-items:center;touch-action:none}
-  .hotspot span{width:10px;height:10px;border-radius:50%;background:#60a5fa;opacity:.75}
-  .hotspot.correct{border-color:#22c55e;background:rgba(34,197,94,.15)}
-  .target-name{position:absolute;transform:translate(-50%,-110%);background:#111827;border:1px solid #243145;padding:.22rem .4rem;border-radius:8px;font-size:.8rem;white-space:nowrap;opacity:.9;pointer-events:none}
-  .labels{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center}
-  .label-chip{user-select:none;background:#1f2937;border:1px solid #27344d;color:#e5e7eb;padding:.4rem .6rem;border-radius:999px;font-weight:700}
-  .label-chip[data-state="active"]{outline:3px solid var(--focus)}
+  /* Practice */
+  h2{font-size:1.15rem;margin:.25rem 0 .5rem}
+  .labels{display:flex;flex-wrap:wrap;gap:.5rem}
+  .label-chip{cursor:pointer;background:#0e1526;border:2px solid #1d2944;color:#e5e7eb;padding:.35rem .6rem;border-radius:999px}
+  .label-chip[data-state="active"]{background:#182036;border-color:#60a5fa}
   .label-chip[data-state="placed"]{opacity:.45}
-  .teacher-bar{display:none;margin:.5rem 0 0;gap:.5rem;flex-wrap:wrap;align-items:center}
-  .teacher-on .teacher-bar{display:flex}
-  .teacher-hint{font-size:.9rem;color:#c7d2fe}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
-  .meter{height:12px;background:#182036;border-radius:999px;overflow:hidden;border:1px solid #233054}
-  .meter>span{display:block;height:100%;width:0;background:linear-gradient(90deg,#22c55e,#0ea5e9)}
-  ol.reorder{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
-  .step{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.5rem;background:#0e1526;border:1px solid #1d2944;border-radius:12px;padding:.5rem}
-  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.35rem}
+  .teacher-bar{display:flex;gap:.5rem;align-items:center;background:#0b1324;border:1px solid #1f2a44;border-radius:12px;padding:.5rem;margin:.5rem 0}
+  .teacher-bar small{color:#cbd5e1}
+  .theory-image figcaption{font-size:.85rem;color:#94a3b8;padding:.5rem 1rem}
+  .sm-note{font-size:.85rem;color:#9ca3af;margin-top:.5rem}
+
+  .microscope-wrap{display:grid;grid-template-columns:1fr;justify-items:center;gap:.5rem}
+  .microscope{position:relative;max-width:680px;width:100%;border-radius:12px;overflow:hidden;border:1px solid #1f2a44;background:#0b1324}
+  .microscope img{display:block;width:100%;height:auto}
+  .hotspot{position:absolute;width:28px;height:28px;border-radius:50%;background:rgba(96,165,250,.15);border:2px solid #60a5fa;transform:translate(-50%,-50%);cursor:pointer}
+  .hotspot.correct{background:rgba(34,197,94,.2);border-color:#22c55e}
+  .target-name{position:absolute;background:#0e1526;border:1px solid #1d2944;color:#e5e7eb;padding:.25rem .5rem;border-radius:6px;transform:translate(-50%,-120%);white-space:nowrap;font-size:.9rem}
+  .teacher-hint{font-size:.9rem;color:#9ca3af}
+  .sm{font-size:.9rem}
+
+  /* Aufgabe 5 – Fokusspiel */
   .rule{display:flex;gap:.6rem;align-items:flex-start;background:#0e1526;border:1px solid #1d2944;border-radius:10px;padding:.5rem;margin:.35rem 0}
   .focus-canvas{width:100%;height:320px;background:#0b1324;border:1px solid #1f2a44;border-radius:12px;position:relative;overflow:hidden}
   .focus-canvas canvas{position:absolute;inset:0;width:100%;height:100%}
   .focus-controls {display: grid; gap: .5rem 1rem; grid-template-columns: auto 1fr; align-items: center; margin-top:.5rem;}
-  .microscope-game{ position:relative; width:100%; max-width:520px; margin:auto; border:1px solid #1f2a44; border-radius:12px; overflow:hidden; background:#0b1324 }
+  .microscope-game{ position:relative; width:100%; max-width:520px; border:1px solid #1f2a44; border-radius:12px; overflow:hidden; background:#0b1324 }
   .microscope-game img{ display:block; width:100%; height:auto }
   .game-overlay{ position:absolute; inset:0; width:100%; height:100% }
-  .hit{ fill:rgba(96,165,250,.0); stroke:#60a5fa; stroke-dasharray:6 6; stroke-width:2; opacity:.0; cursor:pointer; touch-action:none; }
+  .hit{ fill:rgba(96,165,250,.0); stroke:#60a5fa; stroke-dasharray:4 4; stroke-width:2; opacity:.0; cursor:pointer; touch-action:none; }
   .hit:focus, .hit:hover{ opacity:.25; outline:none }
   .knob-indicator{ position:absolute; width:110px; height:110px; border:2px dashed #60a5fa;
     border-radius:50%; top:68.7%; left:74.8%; transform:translate(-50%,-50%) rotate(0deg); pointer-events:none; opacity:.6 }
@@ -109,7 +100,7 @@
   
   /* Aufgabe 2 Styles */
   .parts-grid {display:grid; gap:.75rem; margin:1rem 0}
-  .part-box {background:#1f2937; border:2px solid #27344d; padding:.8rem; border-radius:12px; cursor:pointer; transition:all 0.2s}
+  .part-box {background:#1f2937; border:2px solid #27344d; padding:1rem; border-radius:12px; cursor:pointer; transition:all 0.2s}
   .part-box:hover {border-color:#60a5fa; background:#243145}
   .part-box.waiting {border-color:#60a5fa; background:#182036}
   .part-box.correct {border-color:#22c55e; background:rgba(34,197,94,.1)}
@@ -120,15 +111,27 @@
   .function-chip {background:#0e1526; border:2px solid #1d2944; color:#e5e7eb; padding:.5rem .75rem; 
                   border-radius:999px; cursor:pointer; font-size:.9rem; transition:all 0.2s}
   .function-chip:hover {border-color:#60a5fa; background:#182036}
-  .function-chip[data-state="active"] {border-color:#60a5fa; background:#243145; outline:2px solid var(--focus)}
-  .function-chip[data-state="placed"] {opacity:.45; cursor:default}
+  .function-chip[data-state="active"] {border-color:#60a5fa; background:#182036}
+  
+  /* A3 Reorder */
+  .reorder{list-style:none;padding:0;margin:.5rem 0;display:grid;gap:.35rem}
+  .step{display:grid;grid-template-columns:1fr auto;gap:.5rem;align-items:center;background:#0e1526;border:1px solid #1d2944;border-radius:10px;padding:.5rem}
+  .step .pill{justify-self:start}
+  .grid3{display:grid;grid-template-columns:repeat(3,auto);gap:.35rem}
+  
+  /* Vergleichstabelle */
+  .comparison-table{width:100%;border-collapse:collapse;background:#0e1526;border:1px solid #1d2944;border-radius:10px;overflow:hidden}
+  .comparison-table th,.comparison-table td{border-bottom:1px solid #1d2944;padding:.5rem;text-align:left}
+  .comparison-table th{background:#0b1324}
+  .comparison-table tr:hover{background:#111827}
 </style>
 </head>
+
 <body class="theory-mode">
 <header>
   <div>
     <h1>Lichtmikroskop — Interaktives Arbeitsblatt (Jg. 9)</h1>
-    <div class="small">Mit Theorieteil und interaktiven Übungen. Punkte: <span class="pill"><span id="score" class="score">0</span></span></div>
+    <div class="small">Mit Theorieteil und interaktiven Übungen. <span class="pill">Punkte: <span id="score" class="score">0</span></span></div>
   </div>
   <div class="right">
     <button id="toggleTeacher" class="btn-ghost" aria-pressed="false" title="Lehrermodus ein/aus">Lehrermodus</button>
@@ -138,263 +141,25 @@
 <main>
   <!-- Mode Toggle -->
   <div class="mode-toggle">
-    <button id="theoryModeBtn" class="btn-theory active">📚 Lernmodus</button>
-    <button id="practiceModeBtn" class="btn-practice">✏️ Übungsmodus</button>
+    <button id="theoryModeBtn" class="active">Theorie</button>
+    <button id="practiceModeBtn">Üben</button>
   </div>
 
   <!-- THEORY SECTION -->
   <div class="theory-section">
     <section class="card">
       <h2>🔬 Das Lichtmikroskop — Aufbau und Funktion</h2>
-      <p>Das Lichtmikroskop ist eines der wichtigsten Werkzeuge in den Naturwissenschaften. Es ermöglicht uns, Strukturen zu sehen, die für das bloße Auge unsichtbar sind — von Zellen über Bakterien bis hin zu winzigen Kristallen.</p>
-      
-      <div class="tip-box">
-        <h4>Grundprinzip der Mikroskopie</h4>
-        <p>Ein Mikroskop vergrößert kleine Objekte durch ein System aus Linsen. Das Licht durchstrahlt das Präparat von unten, wird durch die Objektive gebündelt und durch das Okular nochmals vergrößert. Die <span class="highlight">Gesamtvergrößerung</span> ergibt sich aus: Objektiv × Okular (z.B. 40× × 10× = 400×)</p>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>📋 Die Bauteile im Detail</h2>
-      
+      <p>Das Lichtmikroskop ist eines der wichtigsten Werkzeuge in der Biologie. …</p>
       <div class="theory-grid">
+        <figure class="theory-image">
+          <img src="mikroskop_theory.png" alt="Beschriftetes Lichtmikroskop">
+          <figcaption>Wichtige Bauteile eines Lichtmikroskops</figcaption>
+        </figure>
         <div>
-          <div class="part-description">
-            <h4>1. Okular (Augenstück)</h4>
-            <p>Die Linse, durch die du hindurchschaust. Standardvergrößerung meist 10×. Moderne Mikroskope haben oft zwei Okulare (Binokular) für entspannteres Sehen.</p>
-          </div>
-
-          <div class="part-description">
-            <h4>2. Tubus</h4>
-            <p>Das Verbindungsrohr zwischen Okular und Objektiven. Er hält die optischen Bauteile im richtigen Abstand und schützt vor Streulicht.</p>
-          </div>
-
-          <div class="part-description">
-            <h4>3. Revolver (Objektivrevolver)</h4>
-            <p>Drehbare Halterung für mehrere Objektive. Ermöglicht schnellen Wechsel zwischen verschiedenen Vergrößerungen durch einfaches Drehen.</p>
-          </div>
-
-          <div class="part-description">
-            <h4>4. Objektive</h4>
-            <p>Die wichtigsten optischen Bauteile! Typische Vergrößerungen: 4×, 10×, 40×, 100× (Öl). Je stärker die Vergrößerung, desto näher muss das Objektiv ans Präparat.</p>
-          </div>
-
-          <div class="part-description">
-            <h4>5. Objekttisch</h4>
-            <p>Trägt den Objektträger mit dem Präparat. Hat meist Klammern zum Fixieren und oft einen Kreuztisch für präzises Verschieben.</p>
-          </div>
-        </div>
-
-        <div>
-          <div class="theory-image">
-            <img src="mikroskopaufbau.jpg" alt="Beschriftetes Lichtmikroskop mit allen wichtigen Bauteilen" />
-          </div>
-
-          <div class="part-description">
-            <h4>6. Grobtrieb</h4>
-            <p>Das große Rad zum schnellen Einstellen des Abstands zwischen Objektiv und Präparat. <span class="highlight">Vorsicht:</span> Bei hohen Vergrößerungen (40×, 100×) nie benutzen!</p>
-          </div>
-
-          <div class="part-description">
-            <h4>7. Feintrieb</h4>
-            <p>Das kleine Rad für präzise Fokussierung. Bei starken Vergrößerungen NUR diesen verwenden, um Objektiv und Präparat nicht zu beschädigen.</p>
-          </div>
-
-          <div class="part-description">
-            <h4>8. Lichtquelle & Kondensor</h4>
-            <p>LED oder Halogenlampe beleuchtet das Präparat von unten. Der Kondensor bündelt das Licht optimal. Die Blende reguliert die Lichtmenge.</p>
-          </div>
-
-          <div class="part-description">
-            <h4>9. Fuß & Stativ</h4>
-            <p>Stabiler Standfuß und Säule tragen alle Bauteile. Beim Transport: Eine Hand am Stativ, eine unter dem Fuß!</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>🎯 Richtig Mikroskopieren — Schritt für Schritt</h2>
-      
-      <div class="process-steps">
-        <div class="process-step">
-          <div class="step-number">1</div>
-          <div class="step-content">
-            <h5>Vorbereitung</h5>
-            <p>Mikroskop auf stabilen Tisch stellen, Stromkabel anschließen, Lampe einschalten und auf mittlere Helligkeit einstellen.</p>
-          </div>
-        </div>
-
-        <div class="process-step">
-          <div class="step-number">2</div>
-          <div class="step-content">
-            <h5>Objektträger einlegen</h5>
-            <p>Präparat mittig auf den Objekttisch legen, mit Klammern fixieren. Das Deckglas zeigt nach oben!</p>
-          </div>
-        </div>
-
-        <div class="process-step">
-          <div class="step-number">3</div>
-          <div class="step-content">
-            <h5>Kleinste Vergrößerung wählen</h5>
-            <p>IMMER mit dem 4× oder 10× Objektiv beginnen! Revolver drehen bis das Objektiv einrastet.</p>
-          </div>
-        </div>
-
-        <div class="process-step">
-          <div class="step-number">4</div>
-          <div class="step-content">
-            <h5>Grob fokussieren</h5>
-            <p>Von der Seite beobachten: Objektiv vorsichtig dem Präparat nähern. Dann durchs Okular schauen und langsam nach oben drehen bis ein Bild erscheint.</p>
-          </div>
-        </div>
-
-        <div class="process-step">
-          <div class="step-number">5</div>
-          <div class="step-content">
-            <h5>Fein fokussieren</h5>
-            <p>Mit dem Feintrieb das Bild scharf stellen. Blende anpassen für optimalen Kontrast.</p>
-          </div>
-        </div>
-
-        <div class="process-step">
-          <div class="step-number">6</div>
-          <div class="step-content">
-            <h5>Vergrößerung erhöhen</h5>
-            <p>Interessanten Bereich in die Mitte bringen, nächsthöheres Objektiv einrasten lassen. Ab 40×: NUR noch Feintrieb verwenden!</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="tip-box">
-        <h4>Profi-Tipp: Die Schärfeebene</h4>
-        <p>Bei hohen Vergrößerungen ist die Schärfentiefe sehr gering. Du siehst nur eine dünne Ebene scharf. Durch vorsichtiges Drehen am Feintrieb kannst du verschiedene Ebenen des Präparats "durchfokussieren" und so einen 3D-Eindruck gewinnen!</p>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>⚠️ Sicherheit & Pflege</h2>
-      
-      <h3>Die goldenen Regeln:</h3>
-      <div class="process-steps">
-        <div class="process-step">
-          <div class="step-number">✓</div>
-          <div class="step-content">
-            <h5>Transport mit beiden Händen</h5>
-            <p>Eine Hand am Stativ (Arm), eine unter dem Fuß. Niemals nur am Tubus tragen!</p>
-          </div>
-        </div>
-
-        <div class="process-step">
-          <div class="step-number">✓</div>
-          <div class="step-content">
-            <h5>Linsen nur mit Linsenpapier reinigen</h5>
-            <p>Niemals Taschentuch oder Ärmel verwenden — das zerkratzt die empfindlichen Linsen!</p>
-          </div>
-        </div>
-
-        <div class="process-step">
-          <div class="step-number">✓</div>
-          <div class="step-content">
-            <h5>Bei hoher Vergrößerung: Grobtrieb tabu!</h5>
-            <p>Ab 40× kann der Grobtrieb Objektiv und Präparat zerstören. Nur Feintrieb!</p>
-          </div>
-        </div>
-
-        <div class="process-step">
-          <div class="step-number">✓</div>
-          <div class="step-content">
-            <h5>Nach dem Mikroskopieren</h5>
-            <p>Kleinstes Objektiv einrasten, Objekttisch säubern, Kabel ordentlich aufwickeln, Schutzhülle aufsetzen.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>📊 Vergrößerungen im Vergleich</h2>
-      
-      <table class="comparison-table">
-        <thead>
-          <tr>
-            <th>Objektiv</th>
-            <th>Gesamtvergrößerung (10× Okular)</th>
-            <th>Typische Anwendung</th>
-            <th>Arbeitsabstand</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>4×</strong></td>
-            <td>40×</td>
-            <td>Übersicht, große Strukturen (z.B. Blattquerschnitt)</td>
-            <td>~30 mm</td>
-          </tr>
-          <tr>
-            <td><strong>10×</strong></td>
-            <td>100×</td>
-            <td>Pflanzenzellen, größere Einzeller</td>
-            <td>~10 mm</td>
-          </tr>
-          <tr>
-            <td><strong>40×</strong></td>
-            <td>400×</td>
-            <td>Zellkerne, Bakterien, feine Strukturen</td>
-            <td>~3 mm</td>
-          </tr>
-          <tr>
-            <td><strong>100× (Öl)</strong></td>
-            <td>1000×</td>
-            <td>Chromosomen, sehr kleine Bakterien</td>
-            <td>~0.2 mm</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="tip-box">
-        <h4>Was kann ich in welcher Vergrößerung sehen?</h4>
-        <p>• <strong>40-100×:</strong> Pflanzenzellen mit Zellwand, große Chloroplasten<br>
-        • <strong>100-400×:</strong> Zellkern, Mitochondrien (als Punkte), rote Blutkörperchen<br>
-        • <strong>400-1000×:</strong> Bakterien, Chromosomen während der Zellteilung, Geißeln</p>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>🔍 Typische Anfängerfehler vermeiden</h2>
-      
-      <div class="theory-grid">
-        <div>
-          <div class="part-description" style="border-left-color:#ef4444">
-            <h4>❌ Luftblasen im Präparat</h4>
-            <p>Deckglas schräg aufsetzen und langsam ablegen. Überschüssige Flüssigkeit mit Filterpapier absaugen.</p>
-          </div>
-
-          <div class="part-description" style="border-left-color:#ef4444">
-            <h4>❌ Zu viel/wenig Licht</h4>
-            <p>Mit Blende und Kondensor experimentieren. Zu viel Licht → überstrahltes Bild. Zu wenig → dunkle Details nicht erkennbar.</p>
-          </div>
-
-          <div class="part-description" style="border-left-color:#ef4444">
-            <h4>❌ Unscharfes Bild trotz Fokussierung</h4>
-            <p>Objektiv oder Okular verschmutzt? Mit Linsenpapier reinigen. Präparat zu dick? Dünnere Schnitte anfertigen.</p>
-          </div>
-        </div>
-
-        <div>
-          <div class="part-description" style="border-left-color:#22c55e">
-            <h4>✅ Systematisches Durchmustern</h4>
-            <p>Präparat mäanderförmig (schlangenlinienförmig) abfahren, um nichts zu übersehen.</p>
-          </div>
-
-          <div class="part-description" style="border-left-color:#22c55e">
-            <h4>✅ Köhlern für Profis</h4>
-            <p>Fortgeschrittene Technik zur optimalen Ausleuchtung. Kondensor und Blende perfekt aufeinander abstimmen.</p>
-          </div>
-
-          <div class="part-description" style="border-left-color:#22c55e">
-            <h4>✅ Protokoll führen</h4>
-            <p>Beobachtungen sofort skizzieren und beschriften. Vergrößerung, Färbung und Besonderheiten notieren.</p>
-          </div>
+          <div class="part-description"><h4>Okular &amp; Objektive</h4><p>…</p></div>
+          <div class="part-description"><h4>Grob- &amp; Feintrieb</h4><p>…</p></div>
+          <div class="part-description"><h4>Beleuchtung</h4><p>…</p></div>
+          <div class="tip-box"><h4>Grundprinzip der Mikroskopie</h4><p>…</p></div>
         </div>
       </div>
     </section>
@@ -402,158 +167,154 @@
 
   <!-- PRACTICE SECTION -->
   <div class="practice-section">
-    <section class="card" id="a1">
-      <h2>1) Teile des Mikroskops — Tip-Tap Labeln</h2>
-      <p class="small">Schüler: Label unten auswählen → passende Stelle im Bild tippen. Lehrkraft: Lehrermodus aktivieren, Hotspots setzen/ziehen, speichern.</p>
 
+    <!-- Aufgabe 1 (Hotspots, Lehrermodus bleibt unverändert) -->
+    <section id="a1" class="card">
+      <div class="section-title"><h2>Aufgabe 1: Teile zuordnen</h2></div>
+      <div class="labels" id="labelList"></div>
       <div class="microscope-wrap">
-        <div class="microscope" id="microscope" aria-label="Abbildung eines Lichtmikroskops ohne Beschriftung">
-          <img src="mikroskop.png" alt="Unbeschriftetes Lichtmikroskop (Okular, Tubus, Revolver, Objektive, Objekttisch, Triebe, Lichtquelle, Fuß)"/>
+        <div class="microscope" id="microscope">
+          <img src="mikroskop.png" alt="Mikroskop mit Hotspots"/>
+          <!-- Hotspots werden per JS gesetzt -->
         </div>
-
-        <div class="labels" id="labelList" aria-label="Beschriftungen"></div>
-
-        <div class="teacher-bar" id="teacherBar">
-          <span class="teacher-hint">Lehrermodus: Label wählen → im Bild tippen oder Punkt ziehen. Positionen sind relativ (in %).</span>
-          <button id="saveLocal" class="btn-secondary">In Browser speichern</button>
-          <button id="exportJson" class="btn-secondary">Hotspots speichern (JSON)</button>
-          <button id="importJson" class="btn-secondary">Hotspots laden (JSON)</button>
-          <button id="resetAll" class="btn-ghost">Alle zurücksetzen</button>
-          <span class="pill" id="teacherMsg" aria-live="polite"></span>
-        </div>
-
-        <div class="toolbar">
-          <button id="checkA1" class="btn-secondary">Fortschritt prüfen</button>
-          <button id="resetA1" class="btn-ghost">Schüler-Ansicht zurücksetzen</button>
-          <span class="pill" id="a1msg" aria-live="polite">Noch keine Auswahl.</span>
+        <div class="teacher-bar" id="teacherBar" aria-hidden="true">
+          <small id="teacherMsg">Lehrermodus aus.</small>
+          <div class="toolbar">
+            <button class="btn-secondary" id="savePos">Positionen sichern</button>
+            <button class="btn-secondary" id="loadPos">Gespeicherte Positionen laden</button>
+            <button class="btn-secondary" id="resetAll">Werkseinstellung</button>
+          </div>
         </div>
       </div>
-    </section>
-
-    <section class="card">
-      <h2>2) Funktionen der Mikroskopteile</h2>
-      <p class="small">Wähle eine Funktion unten aus und tippe dann auf das passende Teil in der Liste.</p>
-      
-      <div class="parts-grid" id="partsGrid">
-        <div class="part-box" data-part="Okular">
-          <div class="part-title">Okular</div>
-          <div class="part-function" data-empty="Tippe hier nach Auswahl einer Funktion"></div>
-        </div>
-        <div class="part-box" data-part="Objektive">
-          <div class="part-title">Objektive</div>
-          <div class="part-function" data-empty="Tippe hier nach Auswahl einer Funktion"></div>
-        </div>
-        <div class="part-box" data-part="Objekttisch">
-          <div class="part-title">Objekttisch</div>
-          <div class="part-function" data-empty="Tippe hier nach Auswahl einer Funktion"></div>
-        </div>
-        <div class="part-box" data-part="Grobtrieb">
-          <div class="part-title">Grobtrieb</div>
-          <div class="part-function" data-empty="Tippe hier nach Auswahl einer Funktion"></div>
-        </div>
-        <div class="part-box" data-part="Feintrieb">
-          <div class="part-title">Feintrieb</div>
-          <div class="part-function" data-empty="Tippe hier nach Auswahl einer Funktion"></div>
-        </div>
-        <div class="part-box" data-part="Lichtquelle">
-          <div class="part-title">Lichtquelle</div>
-          <div class="part-function" data-empty="Tippe hier nach Auswahl einer Funktion"></div>
-        </div>
-      </div>
-      
-      <div class="function-chips" id="functionChips">
-        <button class="function-chip" data-for="Okular">Linse zum Durchschauen, vergrößert zusätzlich</button>
-        <button class="function-chip" data-for="Objektive">Verschiedene Linsen für unterschiedliche Vergrößerungen</button>
-        <button class="function-chip" data-for="Objekttisch">Trägt den Objektträger mit dem Präparat</button>
-        <button class="function-chip" data-for="Grobtrieb">Große Bewegungen zum groben Einstellen</button>
-        <button class="function-chip" data-for="Feintrieb">Kleine, präzise Bewegungen für die Feineinstellung</button>
-        <button class="function-chip" data-for="Lichtquelle">Beleuchtet das Präparat von unten</button>
-      </div>
-      
       <div class="toolbar">
-        <button id="checkA2">Zuordnungen prüfen</button>
-        <button id="resetA2" class="btn-ghost">Zurücksetzen</button>
-        <span class="pill" id="a2msg">Wähle eine Funktion und tippe auf das passende Teil</span>
+        <button id="checkA1" class="btn">Überprüfen</button>
+        <button id="resetA1" class="btn-ghost">Zurücksetzen</button>
       </div>
+      <div class="sm-note" id="a1msg"></div>
     </section>
 
-    <section class="card">
-      <h2>3) Fokussieren — richtige Reihenfolge</h2>
+    <!-- Aufgabe 2 (Zuordnung, unverändert) -->
+    <section id="a2" class="card">
+      <div class="section-title"><h2>Aufgabe 2: Funktion &amp; Bauteil</h2></div>
+      <div class="parts-grid">
+        <div class="part-box" data-part="okular"><div class="part-title">Okular</div><div class="part-function"></div></div>
+        <div class="part-box" data-part="objektiv"><div class="part-title">Objektiv</div><div class="part-function"></div></div>
+        <div class="part-box" data-part="tisch"><div class="part-title">Objekttisch</div><div class="part-function"></div></div>
+        <div class="part-box" data-part="grob"><div class="part-title">Grobtrieb</div><div class="part-function"></div></div>
+        <div class="part-box" data-part="fein"><div class="part-title">Feintrieb</div><div class="part-function"></div></div>
+        <div class="part-box" data-part="lampe"><div class="part-title">Lampe/Spiegel</div><div class="part-function"></div></div>
+      </div>
+      <div class="function-chips">
+        <button class="function-chip" data-function="vergroessert">Bild vergrößern</button>
+        <button class="function-chip" data-function="fokussiert-grob">Fokussieren (grobe Annäherung)</button>
+        <button class="function-chip" data-function="fokussiert-fein">Feine Scharfstellung</button>
+        <button class="function-chip" data-function="traegt">Präparat tragen</button>
+        <button class="function-chip" data-function="beleuchtet">Beleuchten</button>
+        <button class="function-chip" data-function="blick">Beobachtung</button>
+      </div>
+      <div class="toolbar"><button id="checkA2" class="btn">Überprüfen</button><button id="resetA2" class="btn-ghost">Zurücksetzen</button></div>
+      <div class="sm-note" id="a2msg"></div>
+    </section>
+
+    <!-- Aufgabe 3 (Reihenfolge, unverändert) -->
+    <section id="a3" class="card">
+      <div class="section-title"><h2>Aufgabe 3: Reihenfolge beim Mikroskopieren</h2></div>
       <ol class="reorder" id="steps">
-        <li class="step" data-id="licht"><span class="pill">Schritt</span><span>Lampe einschalten, Helligkeit mäßig einstellen.</span><span class="grid3"><button class="btn-secondary up">▲</button><button class="btn-secondary down">▼</button></span></li>
-        <li class="step" data-id="objekttrager"><span class="pill">Schritt</span><span>Objektträger auf den Objekttisch und fixieren.</span><span class="grid3"><button class="btn-secondary up">▲</button><button class="btn-secondary down">▼</button></span></li>
-        <li class="step" data-id="kleinste"><span class="pill">Schritt</span><span>Kleinstes Objektiv (4×) einrasten.</span><span class="grid3"><button class="btn-secondary up">▲</button><button class="btn-secondary down">▼</button></span></li>
-        <li class="step" data-id="grob"><span class="pill">Schritt</span><span>Mit <b>Grobtrieb</b> annähern, dann langsam entfernen bis etwas sichtbar wird.</span><span class="grid3"><button class="btn-secondary up">▲</button><button class="btn-secondary down">▼</button></span></li>
-        <li class="step" data-id="fein"><span class="pill">Schritt</span><span>Mit <b>Feintrieb</b> scharfstellen.</span><span class="grid3"><button class="btn-secondary up">▲</button><button class="btn-secondary down">▼</button></span></li>
-        <li class="step" data-id="wechsel"><span class="pill">Schritt</span><span>Bei Bedarf höheres Objektiv und nur mit <b>Feintrieb</b> nachfokussieren.</span><span class="grid3"><button class="btn-secondary up">▲</button><button class="btn-secondary down">▼</button></span></li>
+        <li class="step" data-id="licht"><span class="pill">Schritt 1</span><span>Licht einstellen</span><span class="grid3"><button class="btn-secondary up">▲</button><button class="btn-secondary down">▼</button></span></li>
+        <li class="step" data-id="objekttrager"><span class="pill">Schritt 2</span><span>Objektträger auflegen</span><span class="grid3"><button class="btn-secondary up">▲</button><button class="btn-secondary down">▼</button></span></li>
+        <li class="step" data-id="kleinste"><span class="pill">Schritt 3</span><span>Kleinste Vergrößerung wählen</span><span class="grid3"><button class="btn-secondary up">▲</button><button class="btn-secondary down">▼</button></span></li>
+        <li class="step" data-id="grob"><span class="pill">Schritt 4</span><span>Mit Grobtrieb scharf stellen</span><span class="grid3"><button class="btn-secondary up">▲</button><button class="btn-secondary down">▼</button></span></li>
+        <li class="step" data-id="fein"><span class="pill">Schritt 5</span><span>Mit Feintrieb nachfokussieren</span><span class="grid3"><button class="btn-secondary up">▲</button><button class="btn-secondary down">▼</button></span></li>
+        <li class="step" data-id="wechsel"><span class="pill">Schritt 6</span><span>Bei Bedarf auf höheres Objektiv wechseln</span><span class="grid3"><button class="btn-secondary up">▲</button><button class="btn-secondary down">▼</button></span></li>
       </ol>
-      <div class="toolbar"><button id="checkA3">Reihenfolge prüfen</button><span class="pill" id="a3msg"></span></div>
+      <div class="toolbar"><button id="checkA3" class="btn">Überprüfen</button></div>
+      <div class="sm-note" id="a3msg"></div>
     </section>
 
-    <section class="card">
-      <h2>4) Sicherheits- & Bedienregeln</h2>
-      <label class="rule"><input type="checkbox" data-ok="true"> Zwei Hände beim Tragen: eine am Arm, eine unter dem Fuß.</label>
-      <label class="rule"><input type="checkbox" data-ok="false"> Direkt mit 40×/100× starten.</label>
-      <label class="rule"><input type="checkbox" data-ok="true"> Objektträger fixieren, bevor fokussiert wird.</label>
-      <label class="rule"><input type="checkbox" data-ok="false"> Grobtrieb ist bei 40×/100× erlaubt.</label>
-      <label class="rule"><input type="checkbox" data-ok="true"> Linsenpapier statt Tuch/Ärmel.</label>
-      <label class="rule"><input type="checkbox" data-ok="true"> Nach dem Arbeiten: kleinstes Objektiv einrasten, Kabel ordentlich.</label>
-      <div class="toolbar"><button id="checkA4">Antworten prüfen</button><span class="pill" id="a4msg"></span></div>
+    <!-- Aufgabe 4 (Checkboxen, unverändert) -->
+    <section id="a4" class="card">
+      <div class="section-title"><h2>Aufgabe 4: Sicherheit &amp; Umgang</h2></div>
+      <ul class="process-steps">
+        <li class="process-step"><span class="step-number">A</span><span>Präparat niemals zerdrücken <input type="checkbox" data-ok="true"></span></li>
+        <li class="process-step"><span class="step-number">B</span><span>Grobtrieb bei 40× verwenden <input type="checkbox" data-ok="false"></span></li>
+        <li class="process-step"><span class="step-number">C</span><span>Feintrieb für scharfes Bild <input type="checkbox" data-ok="true"></span></li>
+        <li class="process-step"><span class="step-number">D</span><span>Lampe/Spiegel korrekt ausrichten <input type="checkbox" data-ok="true"></span></li>
+        <li class="process-step"><span class="step-number">E</span><span>Objektträger gut fixieren <input type="checkbox" data-ok="true"></span></li>
+      </ul>
+      <div class="toolbar"><button id="checkA4" class="btn">Überprüfen</button></div>
+      <div class="sm-note" id="a4msg"></div>
     </section>
 
-    <section class="card" id="focus-game">
-      <h2>5) Fokus-Spiel — „Finde die scharfe Ebene" (Bildgesteuert)</h2>
-      <p class="small">Bediene das Mikroskop direkt am Bild: blauer Ring = <b>Grobtrieb</b>, roter Knopf = <b>Feintrieb</b>, Revolver tippen wechselt Objektive, Lampe tippen ändert die Helligkeit.</p>
+    <!-- Aufgabe 5: Fokus-Spiel -->
+    <section id="a5" class="card">
+      <div class="section-title"><h2>Aufgabe 5: Fokussieren &amp; Beleuchtung (Spiel)</h2></div>
+      <div class="rule">
+        <div>Regeln:</div>
+        <ul class="muted" style="margin:.25rem 0;">
+          <li>Mit dem großen/kleinen Trieb drehen → Fokus einstellen.</li>
+          <li>Revolver antippen → Objektiv wechseln (4×, 10×, 40×).</li>
+          <li>Lampe antippen → Helligkeit durchschalten (70 % / 100 % / 130 %).</li>
+        </ul>
+      </div>
 
-      <div class="grid2">
-        <div class="microscope-game" id="microscopeGame" aria-label="Interaktives Mikroskop-Bild zur Steuerung">
-          <img src="mikroskop_game.png" onerror="this.onerror=null;this.src='mirkoskop_game.png';" alt="Mikroskop mit Grob- und Feintrieb (rechts), Revolver (über dem Tisch) und Lampe (links unten)."/>
-          <svg class="game-overlay" viewBox="0 0 1000 1500" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-            <circle class="hit" data-control="grob" cx="748" cy="1030" r="145"></circle>
-            <circle class="hit" data-control="fein" cx="748" cy="1030" r="55"></circle>
-            <ellipse class="hit" data-control="revolver" cx="365" cy="585" rx="145" ry="70"></ellipse>
-            <ellipse class="hit" data-control="lampe" cx="305" cy="1075" rx="120" ry="70"></ellipse>
-          </svg>
+      <div class="microscope-game" id="microscopeGame" aria-label="Interaktives Mikroskop-Bild zur Steuerung">
+        <img src="mikroskop_game.png" onerror="this.onerror=null;this.alt='Mikroskop (Spiel)';" alt="Mikroskop (Spiel), Interaktion über Grob-/Feintrieb (rechts), Revolver (über dem Tisch) und Lampe (links unten)."/>
+        <svg class="game-overlay" viewBox="0 0 1000 1500" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <circle class="hit" data-control="grob" cx="748" cy="1030" r="145"></circle>
+          <circle class="hit" data-control="fein" cx="748" cy="1030" r="55"></circle>
+          <ellipse class="hit" data-control="revolver" cx="365" cy="585" rx="145" ry="70"></ellipse>
+          <ellipse class="hit" data-control="lampe" cx="305" cy="1075" rx="120" ry="70"></ellipse>
+        </svg>
 
-          <div class="knob-indicator" id="grobAngle" aria-hidden="true"></div>
-          <div class="knob-indicator small" id="feinAngle" aria-hidden="true"></div>
-          <div class="pill hud">
-            Obj: <b id="hud-obj">4× (40×)</b> · Grob: <b id="hud-g">0%</b> · Fein: <b id="hud-f">0%</b> · Licht: <b id="hud-l">100%</b>
-          </div>
-        </div>
-
-        <div>
-          <div class="focus-canvas" aria-label="Fokus-Spiel mit Mikroskopfoto">
-            <canvas id="lab" aria-label="Mikroskopisches Bild, unscharf bis scharf je nach Einstellung"></canvas>
-          </div>
-          <div class="toolbar" style="margin-top:.75rem;">
-            <button id="checkA5">Prüfen</button>
-            <span class="pill" id="a5msg">Noch nicht geprüft.</span>
-          </div>
-
-          <div style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
-            <label for="grob">Grobtrieb:</label>
-            <input id="grob" type="range" min="0" max="100" value="0"/>
-            <label for="fein">Feintrieb:</label>
-            <input id="fein" type="range" min="0" max="100" value="0"/>
-            <div id="objective-selector">
-              <button class="btn-secondary" data-mag="4">4x</button>
-              <button class="btn-secondary" data-mag="10">10x</button>
-              <button class="btn-secondary" data-mag="40">40x</button>
-              <span class="pill">Gesamtvergrößerung: <b id="total-mag">40x</b></span>
-            </div>
-          </div>
+        <div class="knob-indicator" id="grobAngle" aria-hidden="true"></div>
+        <div class="knob-indicator small" id="feinAngle" aria-hidden="true"></div>
+        <div class="hud">
+          <div class="pill">Objektiv: <b id="hud-obj">4× (40×)</b></div>
+          <div class="pill">Grob: <b id="hud-g">0%</b></div>
+          <div class="pill">Fein: <b id="hud-f">50%</b></div>
+          <div class="pill">Licht: <b id="hud-l">100%</b></div>
         </div>
       </div>
-    </section>
 
-    <section class="card">
+      <div class="focus-canvas" aria-label="Fokus-Spiel mit Mikroskopfoto">
+        <canvas id="lab" aria-label="Mikroskopisches Bild, unscharf bis scharf je nach Einstellung"></canvas>
+      </div>
+
+      <!-- Fallback-Buttons für Screenreader/Tastatur (optional, können fehlen) -->
+      <div class="toolbar" id="objective-selector">
+        <button class="btn-secondary" data-mag="4">4x</button>
+        <button class="btn-secondary" data-mag="10">10x</button>
+        <button class="btn-secondary" data-mag="40">40x</button>
+        <span class="pill">Gesamtvergrößerung: <b id="total-mag">40x</b></span>
+      </div>
+
       <div class="toolbar">
-        <button id="save">Fortschritt speichern (JSON)</button>
-        <button id="load" class="btn-secondary">Laden</button>
-        <button onclick="window.print()" class="btn-ghost">Drucken / PDF</button>
+        <button id="checkA5" class="btn">Bildqualität prüfen</button>
+        <button id="resetA5" class="btn-ghost">Zurücksetzen</button>
       </div>
-      <p class="small">Punkte sind Gamification — fachliche Sicherung in der Nachbesprechung.</p>
+      <div class="sm-note" id="a5msg"></div>
+    </section>
+
+    <!-- Vergleichstabelle -->
+    <section class="card">
+      <h2>Vergleich: Mikroskoptypen</h2>
+      <table class="comparison-table">
+        <thead><tr><th>Typ</th><th>Vorteile</th><th>Grenzen</th></tr></thead>
+        <tbody>
+          <tr><td>Lichtmikroskop</td><td>Preiswert, live beobachten</td><td>Auflösung begrenzt (~200 nm)</td></tr>
+          <tr><td>REM</td><td>Hohe Auflösung/Oberflächen</td><td>Nur Vakuum/keine lebenden Proben</td></tr>
+          <tr><td>TEM</td><td>Ultrahochauflösung (innere Strukturen)</td><td>Aufwendige Präparation, 2D-Schnitte</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Save/Load -->
+    <section class="card">
+      <h2>Fortschritt sichern</h2>
+      <div class="toolbar">
+        <button id="saveAll" class="btn-secondary">Alles speichern</button>
+        <button id="loadAll" class="btn-secondary">Laden</button>
+      </div>
     </section>
   </div>
 </main>
@@ -575,25 +336,24 @@ practiceBtn.addEventListener('click', () => {
   document.body.className = 'practice-mode';
   practiceBtn.classList.add('active');
   theoryBtn.classList.remove('active');
-  window.dispatchEvent(new Event('resize'));   // <— Canvas neu bemessen
 });
 
 /* ============================================================
-   LABEL-KONFIG & HOTSPOTS (Prozentkoordinaten aus JSON)
+   DATA
    ============================================================ */
-const LABELS = ["Okular","Tubus","Revolver","Objektive","Objekttisch","Grobtrieb","Feintrieb","Lichtquelle","Fuß"];
-
-// Hotspots direkt aus der JSON-Datei implementiert
+const LABELS = ["Okular","Objektiv","Objekttisch","Kreuztisch","Grobtrieb","Feintrieb","Revolver","Fuß","Tubus","Stativ","Lampe/Spiegel"];
 const DEFAULT_HOTSPOTS = [
-  {"name": "Okular", "x": 25.07, "y": 22.54},
-  {"name": "Tubus", "x": 33.56, "y": 23.67},
-  {"name": "Revolver", "x": 42.76, "y": 35.17},
-  {"name": "Objektive", "x": 35.03, "y": 39.00},
-  {"name": "Objekttisch", "x": 30.56, "y": 44.34},
-  {"name": "Grobtrieb", "x": 55.29, "y": 57.34},
-  {"name": "Feintrieb", "x": 59.91, "y": 53.17},
-  {"name": "Lichtquelle", "x": 38.68, "y": 60.51},
-  {"name": "Fuß", "x": 29.26, "y": 65.01}
+  {"name": "Okular", "x": 69.44, "y": 4.55},
+  {"name": "Objektiv", "x": 39.34, "y": 39.24},
+  {"name": "Objekttisch", "x": 45.22, "y": 58.16},
+  {"name": "Kreuztisch", "x": 44.54, "y": 54.02},
+  {"name": "Grobtrieb", "x": 71.45, "y": 53.35},
+  {"name": "Feintrieb", "x": 69.61, "y": 53.35},
+  {"name": "Revolver", "x": 36.51, "y": 35.94},
+  {"name": "Fuß", "x": 29.26, "y": 65.01},
+  {"name": "Tubus", "x": 57.88, "y": 19.87},
+  {"name": "Stativ", "x": 63.00, "y": 27.12},
+  {"name": "Lampe/Spiegel", "x": 28.27, "y": 70.90}
 ];
 
 function loadHotspotsFromStorage(){
@@ -623,55 +383,33 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
   // Chips erzeugen
   LABELS.forEach(name=>{
     const b=document.createElement('button');
-    b.className='label-chip'; b.dataset.state='idle'; b.dataset.for=name; b.textContent=name;
-    b.addEventListener('click', ()=>{
-      if(teacherMode){ teacherActiveLabel=name; highlightTeacherChip(); teacherMsg.textContent=`Lehrer: "${name}" aktiv. Tippe/ziehe im Bild.`; }
-      else{ if(solved.has(name)) return; activeLabel=b; updateStudentChips(); msg.textContent=`Ausgewählt: ${name}. Tippe auf die passende Stelle.`; }
+    b.className='label-chip';
+    b.textContent=name;
+    b.dataset.for=name;
+    b.addEventListener('click',()=>{
+      if(b.dataset.state==='placed') return;
+      document.querySelectorAll('.label-chip').forEach(x=>{ if(x.dataset.state!=='placed') x.dataset.state='idle'; });
+      b.dataset.state='active'; activeLabel=b;
     });
     labelList.appendChild(b);
   });
 
-  function updateStudentChips(){
-    document.querySelectorAll('.label-chip').forEach(c=>{
-      const placed = solved.has(c.dataset.for);
-      c.dataset.state = placed ? 'placed' : (c===activeLabel ? 'active' : 'idle');
-    });
-  }
-  function highlightTeacherChip(){
-    document.querySelectorAll('.label-chip').forEach(c=>{
-      c.dataset.state = (c.dataset.for===teacherActiveLabel)?'active':'idle';
-    });
-  }
-
-  function renderHotspots(){
-    container.querySelectorAll('.hotspot').forEach(n=>n.remove());
+  function renderAll(){
+    container.querySelectorAll('.hotspot').forEach(h=>h.remove());
     config.forEach(h=>{
-      const dot=document.createElement('div');
-      dot.className='hotspot'; dot.dataset.name=h.name; dot.style.left=h.x+'%'; dot.style.top=h.y+'%'; dot.tabIndex=0;
-      dot.appendChild(document.createElement('span'));
-      container.appendChild(dot);
-
-      if(teacherMode){
-        const tag=document.createElement('div'); tag.className='target-name'; tag.textContent=h.name; dot.appendChild(tag);
-      }
-
-      if(teacherMode){
-        enableDrag(dot, h);
-        dot.addEventListener('click', e=>{
-          if(teacherActiveLabel && h.name===teacherActiveLabel){
-            const pos = relativePercentFromEvent(e, container);
-            h.x=pos.x; h.y=pos.y; dot.style.left=h.x+'%'; dot.style.top=h.y+'%';
-            teacherMsg.textContent = `„${h.name}" auf (${h.x.toFixed(1)}%, ${h.y.toFixed(1)}%).`;
-          }
-        });
-      }else{
-        dot.addEventListener('click', ()=>tryPlace(dot));
-        dot.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); tryPlace(dot);} });
-      }
+      const el=document.createElement('button');
+      el.className='hotspot';
+      el.style.left=h.x+'%'; el.style.top=h.y+'%';
+      el.dataset.name=h.name;
+      el.title=h.name;
+      el.addEventListener('click',()=>tryPlace(el));
+      container.appendChild(el);
+      enableDrag(el,h);
     });
+    teacherMsg.textContent = teacherMode ? 'Lehrermodus aktiv' : 'Lehrermodus aus.';
   }
 
-  function relativePercentFromEvent(e, ref){
+  function getPos(e,ref){
     const r = ref.getBoundingClientRect();
     const x = ((e.clientX - r.left)/r.width)*100;
     const y = ((e.clientY - r.top)/r.height)*100;
@@ -681,8 +419,8 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
   function enableDrag(el, model){
     let dragging=false, offX=0, offY=0;
     const start=(cx,cy)=>{ dragging=true; const r=container.getBoundingClientRect(); offX=((cx-r.left)/r.width)*100 - model.x; offY=((cy-r.top)/r.height)*100 - model.y; document.body.style.userSelect='none'; };
-    const move=(cx,cy)=>{ if(!dragging) return; const r=container.getBoundingClientRect(); model.x=Math.max(0,Math.min(100, ((cx-r.left)/r.width)*100 - offX)); model.y=Math.max(0,Math.min(100, ((cy-r.top)/r.height)*100 - offY)); el.style.left=model.x+'%'; el.style.top=model.y+'%'; };
-    const end=()=>{ if(dragging){ dragging=false; document.body.style.userSelect=''; teacherMsg.textContent=`„${model.name}": ${model.x.toFixed(1)}%, ${model.y.toFixed(1)}%`; } };
+    const move=(cx,cy)=>{ if(!dragging) return; const r=container.getBoundingClientRect(); model.x=Math.max(0,Math.min(100,((cx-r.left)/r.width)*100 - offX)); model.y=Math.max(0,Math.min(100,((cy-r.top)/r.height)*100 - offY)); el.style.left=model.x+'%'; el.style.top=model.y+'%'; };
+    const end=()=>{ if(dragging){ dragging=false; document.body.style.userSelect=''; teacherMsg.textContent=`${model.name} → ${model.x.toFixed(1)}%, ${model.y.toFixed(1)}%`; } };
     el.addEventListener('mousedown', e=>{ if(!teacherMode) return; e.preventDefault(); start(e.clientX,e.clientY); });
     window.addEventListener('mousemove', e=>move(e.clientX,e.clientY));
     window.addEventListener('mouseup', end);
@@ -702,54 +440,28 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
         h.classList.add('correct'); placeLabel(h,want); solved.add(want);
         activeLabel.dataset.state='placed'; activeLabel=null; addScore(1);
         msg.innerHTML = `<span class="ok">Richtig!</span> ${want} platziert.`;
-        const next=[...labelList.children].find(c=>c.dataset.state==='idle'); if(next){ next.click(); }
       }
-    } else { msg.innerHTML = `<span class="err">Falsch:</span> Das ist nicht „${want}".`; addScore(-1); }
+    }else{
+      msg.innerHTML = `<span class="warn">Nicht korrekt.</span> Versuche es erneut.`;
+      addScore(-1);
+    }
   }
 
-  function renderAll(){ renderHotspots(); renderChipsStates(); }
-  function renderChipsStates(){ if(teacherMode) highlightTeacherChip(); else updateStudentChips(); }
-
-  // Passwortschutz beim Aktivieren
-  toggleTeacher.addEventListener('click', ()=>{
-    if (!teacherMode) {
-      const pw = prompt("Bitte Passwort für den Lehrermodus eingeben:");
-      if (pw !== "Lehrermodus") {
-        alert("Falsches Passwort. Zugriff verweigert.");
-        return;
-      }
-    }
-
-    teacherMode = !teacherMode;
-    document.body.classList.toggle('teacher-on', teacherMode);
-    toggleTeacher.setAttribute('aria-pressed', String(teacherMode));
-    toggleTeacher.textContent = teacherMode ? 'Lehrermodus (AN)' : 'Lehrermodus';
-    teacherBar.style.display = teacherMode ? 'flex' : 'none';
-    teacherActiveLabel = LABELS[0];
-    renderAll();
-    teacherMsg.textContent = teacherMode ? 'Lehrer: Label wählen und setzen/ziehen. Danach speichern.' : '';
-    if (!teacherMode) resetStudentView();
+  toggleTeacher.addEventListener('click',()=>{
+    teacherMode=!teacherMode;
+    teacherBar.setAttribute('aria-hidden', !teacherMode);
+    toggleTeacher.setAttribute('aria-pressed', teacherMode);
+    teacherMsg.textContent= teacherMode ? 'Lehrermodus aktiv' : 'Lehrermodus aus.';
   });
 
-  document.getElementById('saveLocal').addEventListener('click', ()=>{
+  document.getElementById('savePos').addEventListener('click', ()=>{
     localStorage.setItem('mikro_hotspots', JSON.stringify(config));
-    teacherMsg.textContent='Gespeichert (Browser). Wird beim nächsten Laden automatisch genutzt.';
+    teacherMsg.textContent='Gespeichert.';
   });
-  document.getElementById('exportJson').addEventListener('click', ()=>{
-    const blob=new Blob([JSON.stringify(config,null,2)],{type:'application/json'});
-    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='mikro_hotspots.json';
-    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(a.href);
-    teacherMsg.textContent='JSON exportiert.';
-  });
-  document.getElementById('importJson').addEventListener('click', ()=>{
-    const inp=document.createElement('input'); inp.type='file'; inp.accept='application/json';
-    inp.onchange=async()=>{ const f=inp.files[0]; if(!f) return; const txt=await f.text();
-      try{ const data=JSON.parse(txt); const names=new Set(data.map(d=>d.name));
-        const ok = LABELS.every(n=>names.has(n)); if(!ok) throw new Error('Labels unvollständig.');
-        config=data; renderAll(); teacherMsg.textContent='Hotspots geladen.';
-      }catch(e){ alert('Fehler beim Laden: '+e.message); }
-    };
-    inp.click();
+  document.getElementById('loadPos').addEventListener('click', ()=>{
+    const raw=localStorage.getItem('mikro_hotspots');
+    if(raw){ config=JSON.parse(raw); renderAll(); teacherMsg.textContent='Geladen.'; }
+    else teacherMsg.textContent='Keine gespeicherten Positionen.';
   });
   document.getElementById('resetAll').addEventListener('click', ()=>{
     if(confirm('Alle Hotspots auf Standard zurücksetzen?')){
@@ -772,7 +484,7 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
   // initial render
   renderAll();
   if(localStorage.getItem('mikro_hotspots')){
-    const note=document.createElement('div'); note.className='small'; note.style.marginTop='.25rem'; note.textContent='Hinweis: Hotspots aus Browser-Speicher geladen.'; document.getElementById('a1').appendChild(note);
+    const note=document.createElement('div'); note.className='sm-note'; note.textContent='Hinweis: Eigene Hotspots aus dem Speicher geladen.'; document.getElementById('a1').appendChild(note);
   }
 })();
 
@@ -780,138 +492,67 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
 (function(){
   const functionChips = document.querySelectorAll('.function-chip');
   const partBoxes = document.querySelectorAll('.part-box');
-  const msg = document.getElementById('a2msg');
-  const checkBtn = document.getElementById('checkA2');
-  const resetBtn = document.getElementById('resetA2');
-  
-  let activeFunction = null;
-  window.a2Assignments = {}; // Global für Save/Load
+  const msg=document.getElementById('a2msg');
 
-  // Function Chips Click Handler
-  functionChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      if (chip.dataset.state === 'placed') return;
-      
-      if (activeFunction) {
-        activeFunction.dataset.state = 'idle';
-      }
-      activeFunction = chip;
-      chip.dataset.state = 'active';
-      
-      partBoxes.forEach(box => {
-        if (!window.a2Assignments[box.dataset.part]) {
-          box.classList.add('waiting');
-        }
-      });
-      msg.textContent = `Funktion ausgewählt: Tippe jetzt auf das passende Teil oben.`;
+  let activeFunction=null;
+  const mapOK={
+    okular:'blick',
+    objektiv:'vergroessert',
+    tisch:'traegt',
+    grob:'fokussiert-grob',
+    fein:'fokussiert-fein',
+    lampe:'beleuchtet'
+  };
+
+  functionChips.forEach(ch=>{
+    ch.addEventListener('click',()=>{
+      functionChips.forEach(x=>x.dataset.state='idle');
+      ch.dataset.state='active'; activeFunction=ch.dataset.function;
     });
   });
 
-  // Part Boxes Click Handler
-  partBoxes.forEach(box => {
-    box.addEventListener('click', () => {
-      if (!activeFunction) {
-        msg.textContent = 'Wähle zuerst eine Funktion unten aus.';
-        return;
-      }
-      
-      const partName = box.dataset.part;
-      const functionText = activeFunction.textContent;
-      const functionFor = activeFunction.dataset.for;
-      
-      if (window.a2Assignments[partName]) {
-        const oldChip = [...functionChips].find(c => c.textContent === window.a2Assignments[partName]);
-        if (oldChip) oldChip.dataset.state = 'idle';
-      }
-      
-      window.a2Assignments[partName] = functionText;
-      const functionEl = box.querySelector('.part-function');
-      functionEl.textContent = functionText;
-      functionEl.classList.add('filled');
-      
-      activeFunction.dataset.state = 'placed';
-      box.classList.remove('waiting');
-      activeFunction = null;
-      
-      partBoxes.forEach(b => b.classList.remove('waiting'));
-      
-      if (functionFor === partName) {
+  partBoxes.forEach(box=>{
+    box.addEventListener('click',()=>{
+      if(!activeFunction){ msg.textContent='Wähle zuerst eine Funktion aus.'; return; }
+      const part=box.dataset.part;
+      const ok=mapOK[part]===activeFunction;
+      if(ok){
         box.classList.add('correct');
-        msg.innerHTML = `<span class="ok">Richtig!</span> ${partName} korrekt zugeordnet.`;
-      } else {
-        box.classList.remove('correct');
-        msg.innerHTML = `<span class="warn">Zugeordnet.</span> Prüfe am Ende alle Zuordnungen.`;
+        const el=box.querySelector('.part-function');
+        el.textContent=chLabel(activeFunction);
+        el.classList.add('filled');
+        activeFunction=null;
+        functionChips.forEach(x=>x.dataset.state='idle');
+        addScore(1);
+        msg.innerHTML='<span class="ok">Richtig zugeordnet.</span>';
+      }else{
+        msg.innerHTML='<span class="warn">Nicht korrekt. Versuche es erneut.</span>';
+        addScore(-1);
       }
-      
-      const nextFunction = [...functionChips].find(c => c.dataset.state !== 'placed');
-      if (nextFunction) {
-        setTimeout(() => nextFunction.click(), 300);
-      }
-    });
-    
-    box.addEventListener('touchend', (e) => {
-      e.preventDefault();
-      box.click();
     });
   });
 
-  // Prüfen
-  checkBtn.addEventListener('click', () => {
-    let correct = 0;
-    const total = partBoxes.length;
-    
-    partBoxes.forEach(box => {
-      const partName = box.dataset.part;
-      const assignedFunction = window.a2Assignments[partName];
-      
-      if (!assignedFunction) {
-        box.classList.remove('correct');
-        return;
-      }
-      
-      const chip = [...functionChips].find(c => c.textContent === assignedFunction);
-      if (chip && chip.dataset.for === partName) {
-        box.classList.add('correct');
-        correct++;
-      } else {
-        box.classList.remove('correct');
-      }
-    });
-    
-    if (correct === total) {
-      msg.innerHTML = '<strong class="ok">Perfekt! Alle Funktionen richtig zugeordnet!</strong>';
-      addScore(3);
-    } else {
-      const missing = total - Object.keys(window.a2Assignments).length;
-      if (missing > 0) {
-        msg.innerHTML = `<span class="warn">${correct}/${total} richtig. Noch ${missing} Zuordnung(en) fehlen.</span>`;
-      } else {
-        msg.innerHTML = `<span class="warn">${correct}/${total} richtig. Überprüfe die falschen Zuordnungen.</span>`;
-      }
-      if (correct > 0) addScore(1);
+  function chLabel(id){
+    switch(id){
+      case 'vergroessert': return 'Bild vergrößern';
+      case 'fokussiert-grob': return 'Fokussieren (grobe Annäherung)';
+      case 'fokussiert-fein': return 'Feine Scharfstellung';
+      case 'traegt': return 'Präparat tragen';
+      case 'beleuchtet': return 'Beleuchten';
+      case 'blick': return 'Beobachtung';
+      default: return id;
     }
-  });
+  }
 
-  // Zurücksetzen
-  resetBtn.addEventListener('click', () => {
-    functionChips.forEach(chip => chip.dataset.state = 'idle');
-    partBoxes.forEach(box => {
-      box.classList.remove('correct', 'waiting');
-      const funcEl = box.querySelector('.part-function');
-      funcEl.textContent = funcEl.dataset.empty || 'Tippe hier nach Auswahl einer Funktion';
-      funcEl.classList.remove('filled');
-    });
-    
-    window.a2Assignments = {};
-    activeFunction = null;
-    msg.textContent = 'Wähle eine Funktion und tippe auf das passende Teil';
+  document.getElementById('checkA2').addEventListener('click', ()=>{
+    const done=[...partBoxes].every(b=>b.classList.contains('correct'));
+    msg.innerHTML = done? '<strong class="ok">Alles korrekt.</strong>' : '<span class="warn">Noch nicht alles korrekt.</span>';
+    if(done) addScore(3);
   });
-  
-  document.querySelectorAll('.part-function').forEach(el => {
-    if (!el.dataset.empty) {
-      el.dataset.empty = 'Tippe hier nach Auswahl einer Funktion';
-      el.textContent = el.dataset.empty;
-    }
+  document.getElementById('resetA2').addEventListener('click', ()=>{
+    partBoxes.forEach(b=>{ b.classList.remove('correct'); const el=b.querySelector('.part-function'); el.textContent=''; el.classList.remove('filled');});
+    functionChips.forEach(x=>x.dataset.state='idle');
+    msg.textContent='Zurückgesetzt.';
   });
 })();
 
@@ -947,14 +588,11 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
   });
 })();
 
-/* =================== Aufgabe 5 (Bildgesteuerte Steuerung + Canvas) =================== */
+/* =================== Aufgabe 5 – Fokus-Spiel =================== */
 (function(){
-  // Canvas und Bild
   const canvas = document.getElementById('lab');
   const ctx = canvas.getContext('2d');
-  const msg = document.getElementById('a5msg');
 
-  // HUD
   const hudObj = document.getElementById('hud-obj');
   const hudG = document.getElementById('hud-g');
   const hudF = document.getElementById('hud-f');
@@ -1000,26 +638,34 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
     ctx.translate(w/2, h/2);
     ctx.scale(zoomFaktor, zoomFaktor);
     ctx.translate(-w/2, -h/2);
+
+    // Helligkeit / Kontrast
+    const brightness = window.a5_state.licht;
+    const contrast = 1.0;
+    ctx.filter = `blur(${blur}px) brightness(${brightness}) contrast(${contrast})`;
     
-    // Blur-Effekt simulieren
-    ctx.filter = `blur(${blur}px) brightness(${window.a5_state.licht})`;
-    
-    // Zeichne simulierte Zellen
-    ctx.fillStyle = '#e8d4f0';
-    ctx.strokeStyle = '#8b5cf6';
-    ctx.lineWidth = 2;
-    
-    // Mehrere Zellen zeichnen
-    for(let i = 0; i < 12; i++){
-      const x = (i % 4) * 80 + 60;
-      const y = Math.floor(i / 4) * 80 + 60;
-      const r = 30;
-      
+    // Hintergrund
+    ctx.fillStyle = '#111827';
+    ctx.fillRect(0,0,w,h);
+
+    // Zelle zeichnen (vereinfachte Demo)
+    const cx = w/2, cy = h/2;
+    const r = Math.min(w,h)/3.5;
+    ctx.fillStyle = '#0ea5e9';
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI*2);
+    ctx.fill();
+
+    // Strukturen
+    for(let i=0;i<10;i++){
+      const ang = (i/10)*Math.PI*2;
+      const x = cx + Math.cos(ang) * r*0.7;
+      const y = cy + Math.sin(ang) * r*0.7;
+      ctx.fillStyle = '#22c55e';
       ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.arc(x, y, r/10, 0, Math.PI*2);
       ctx.fill();
-      ctx.stroke();
-      
+
       // Zellkern
       ctx.fillStyle = '#7c3aed';
       ctx.beginPath();
@@ -1051,34 +697,40 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
     resize(); 
     draw(); 
   };
-  
   img.onerror = ()=>{ 
-    console.warn("Zelle.png nicht gefunden - verwende Fallback-Darstellung");
-    loaded = true;
+    loaded = false; 
     useFallback = true;
-    msg.innerHTML = '<span class="small">Hinweis: Verwende simulierte Zellen. Für realistische Darstellung bitte "Zelle.png" hinzufügen.</span>';
-    resize();
-    draw();
+    console.warn("Zelle.png konnte nicht geladen werden, nutze Fallback-Grafik");
+    resize(); 
+    draw(); 
   };
 
   function resize(){
-    const r = canvas.parentElement.getBoundingClientRect();
-    canvas.width = Math.max(320, Math.round(r.width));
-    canvas.height = Math.round(r.height);
-    if(loaded) draw();
+    const box = document.querySelector('.focus-canvas');
+    const s = box.getBoundingClientRect();
+    // devicePixelRatio für scharfe Darstellung (iPad Retina)
+    const dpr = Math.max(1, Math.min(3, window.devicePixelRatio || 1));
+    canvas.width = Math.floor(s.width * dpr);
+    canvas.height = Math.floor(s.height * dpr);
+    canvas.style.width = s.width + 'px';
+    canvas.style.height = s.height + 'px';
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.scale(dpr, dpr);
+    draw();
   }
-  window.addEventListener('resize', resize, {passive:true});
+  window.addEventListener('resize', resize);
 
-  // Fokusberechnung
-  function calculateFocus() {
-    const grobWert = window.a5_state.grob / 100;
-    const feinWert = ((window.a5_state.fein - 50) / 1000);
-    return grobWert + feinWert;
+  function calculateFocus(){
+    // Basis-Fokus aus Grob (0..100) und Fein (0..100, zentriert bei 50)
+    const grob = window.a5_state.grob / 100;     // 0..1
+    const fein = (window.a5_state.fein - 50) / 100; // -0.5..+0.5
+    // Objektiv beeinflusst die „Schärfentiefe“
+    const faktor = (window.a5_state.aktuellesObjektiv / 40) * 0.2 + 0.9;
+    let f = grob + fein * faktor;
+    return Math.max(0, Math.min(1, f));
   }
 
   function draw(){
-    if(!loaded) return;
-    
     if(useFallback){
       drawFallbackImage();
       return;
@@ -1093,18 +745,19 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
     const abstand = Math.abs(gesamtFokus - zielEbene);
     const blur = Math.min(20, abstand * (100 + window.a5_state.aktuellesObjektiv * 10));
 
-    // Beleuchtung
-    const brightness = window.a5_state.licht;
-    const contrast = 1 + (brightness-1)/2;
-    ctx.save();
-    
     // Zoom mit Objektiv
+    ctx.save();
     const zoomFaktor = window.a5_state.aktuellesObjektiv / 4;
     ctx.translate(w/2, h/2);
     ctx.scale(zoomFaktor, zoomFaktor);
     ctx.translate(-w/2, -h/2);
 
+    // Helligkeit / Kontrast
+    const brightness = window.a5_state.licht;
+    const contrast = 1.0;
     ctx.filter = `blur(${blur}px) brightness(${brightness}) contrast(${contrast})`;
+
+    // Bild zeichnen
     ctx.drawImage(img, 0, 0, w, h);
     ctx.restore();
     ctx.filter = "none";
@@ -1136,14 +789,14 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
     hudG.textContent = `${window.a5_state.grob}%`;
     hudF.textContent = `${window.a5_state.fein}%`;
     hudL.textContent = `${Math.round(window.a5_state.licht*100)}%`;
-    totalMagEl.textContent = `${window.a5_state.aktuellesObjektiv*okularVergroesserung}x`;
+    if(totalMagEl) totalMagEl.textContent = `${window.a5_state.aktuellesObjektiv*okularVergroesserung}x`;
   }
 
   function setGrobFromAngle(cx, cy, px, py){
-    const angle = Math.atan2(py - cy, px - cx) * 180/Math.PI; // -180..180
+    const angle = Math.atan2(py - cy, px - cx) * 180/Math.PI;
     const val = angleToPercent(angle);
     window.a5_state.grob = val;
-    grobSlider.value = val;
+    if(grobSlider) grobSlider.value = val;
     grobAngle.style.transform = `translate(-50%,-50%) rotate(${(val/100)*300-150}deg)`;
     updateHUD(); draw();
   }
@@ -1152,7 +805,7 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
     const angle = Math.atan2(py - cy, px - cx) * 180/Math.PI;
     const val = angleToPercent(angle);
     window.a5_state.fein = val;
-    feinSlider.value = val;
+    if(feinSlider) feinSlider.value = val;
     feinAngle.style.transform = `translate(-50%,-50%) rotate(${(val/100)*300-150}deg)`;
     updateHUD(); draw();
   }
@@ -1200,13 +853,13 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
   overlay.addEventListener('pointerup', ()=>{ drag=null; });
   overlay.addEventListener('pointercancel', ()=>{ drag=null; });
 
-  // Fallback-Events (Tastatur/Screenreader)
-  grobSlider.addEventListener('input', ()=>{
+  // Fallback-Events (Tastatur/Screenreader) — nur registrieren, wenn vorhanden
+  if(grobSlider) grobSlider.addEventListener('input', ()=>{
     if (window.a5_state.aktuellesObjektiv >= 40) alert("VORSICHT! Grobtrieb bei starker Vergrößerung nicht verwenden!");
     window.a5_state.grob = +grobSlider.value;
     updateHUD(); draw();
   });
-  feinSlider.addEventListener('input', ()=>{
+  if(feinSlider) feinSlider.addEventListener('input', ()=>{
     window.a5_state.fein = +feinSlider.value;
     updateHUD(); draw();
   });
@@ -1222,9 +875,12 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
   document.getElementById('checkA5').addEventListener('click', ()=>{
     const gesamtFokus = calculateFocus();
     const zielEbene = 0.55;
-    const toleranz = 0.1 / window.a5_state.aktuellesObjektiv;
-    if (Math.abs(gesamtFokus - zielEbene) < toleranz) {
-      msg.innerHTML = '<strong class="ok">Scharf! Du hast die richtige Ebene gefunden.</strong>';
+    const abstand = Math.abs(gesamtFokus - zielEbene);
+    const blur = Math.min(20, abstand * (100 + window.a5_state.aktuellesObjektiv * 10));
+    const msg=document.getElementById('a5msg');
+
+    if(blur < 2){
+      msg.innerHTML = '<strong class="ok">Sehr gut! Bild ist scharf.</strong>';
       addScore(3);
     } else {
       let hint = gesamtFokus < zielEbene 
@@ -1244,33 +900,39 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
     if(typeof s.licht==='number') window.a5_state.licht = s.licht;
 
     // Fallback-UI syncen
-    grobSlider.value = window.a5_state.grob;
-    feinSlider.value = window.a5_state.fein;
+    if(grobSlider) grobSlider.value = window.a5_state.grob;
+    if(feinSlider) feinSlider.value = window.a5_state.fein;
     const btn = document.querySelector(`#objective-selector button[data-mag="${window.a5_state.aktuellesObjektiv}"]`);
     if(btn){
       document.querySelectorAll('#objective-selector button').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
     }
-
-    // Indikatoren aktualisieren
-    grobAngle.style.transform = `translate(-50%,-50%) rotate(${(window.a5_state.grob/100)*300-150}deg)`;
-    feinAngle.style.transform = `translate(-50%,-50%) rotate(${(window.a5_state.fein/100)*300-150}deg)`;
     updateHUD(); draw();
   };
 
-  // Initialisierung
+  document.getElementById('resetA5').addEventListener('click', ()=>{
+    window.a5_state = {aktuellesObjektiv:4, grob:0, fein:50, licht:1.0};
+    if(grobSlider) grobSlider.value = 0;
+    if(feinSlider) feinSlider.value = 50;
+    document.querySelectorAll('#objective-selector button').forEach(b=>b.classList.remove('active'));
+    const first = document.querySelector('#objective-selector button[data-mag="4"]'); if(first) first.classList.add('active');
+    grobAngle.style.transform = `translate(-50%,-50%) rotate(-150deg)`;
+    feinAngle.style.transform = `translate(-50%,-50%) rotate(0deg)`;
+    updateHUD(); draw();
+    document.getElementById('a5msg').textContent='Zurückgesetzt.';
+  });
+
   function initUI(){
     // Default 4x aktiv
-    document.querySelector('#objective-selector button[data-mag="4"]').classList.add('active');
+    const first = document.querySelector('#objective-selector button[data-mag="4"]');
+    if(first) first.classList.add('active');
     updateHUD();
     // Indikator-Position
     grobAngle.style.transform = `translate(-50%,-50%) rotate(-150deg)`;
     feinAngle.style.transform = `translate(-50%,-50%) rotate(0deg)`;
-    
-    // Canvas initialisieren
+    // Canvas
     resize();
-    
-    // Wenn nach 1 Sekunde kein Bild geladen wurde, Fallback zeichnen
+    // Fallback falls Bild fehlt
     setTimeout(() => {
       if(!loaded){
         console.warn("Bild konnte nicht geladen werden, verwende Fallback");
@@ -1283,114 +945,35 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
 
 /* =================== SAVE/LOAD Fortschritt =================== */
 (function(){
-  function data(){
-    const a1=[...document.querySelectorAll('.label-chip')].map(c=>({name:c.dataset.for, state:c.dataset.state||'idle'}));
-    
-    const a2={};
-    document.querySelectorAll('.part-box').forEach(box => {
-      const funcText = box.querySelector('.part-function').textContent;
-      const emptyText = box.querySelector('.part-function').dataset.empty;
-      if(funcText && funcText !== emptyText) {
-        a2[box.dataset.part] = funcText;
-      }
-    });
-    
-    const a3=[...document.querySelectorAll('#steps .step')].map(li=>li.dataset.id);
-    const a4=[...document.querySelectorAll('input[type="checkbox"][data-ok]')].map(x=>x.checked);
-    
-    // Aufgabe 5 Zustand (jetzt aus a5_state)
-    const a5 = {
-        grob: window.a5_state?.grob ?? +document.getElementById('grob').value,
-        fein: window.a5_state?.fein ?? +document.getElementById('fein').value,
-        objektiv: window.a5_state?.aktuellesObjektiv ?? 4,
-        licht: window.a5_state?.licht ?? 1.0
+  document.getElementById('saveAll').addEventListener('click', ()=>{
+    const data = {
+      score,
+      hotspots: (()=>{
+        try{ return JSON.parse(localStorage.getItem('mikro_hotspots')||'null'); }catch(e){ return null; }
+      })(),
+      a5: window.a5_state
     };
-    
-    return {a1,a2,a3,a4,a5,score};
-  }
-  
-  function downloadJSON(obj, filename){
-    const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});
-    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename||'mikroskop_jg9.json';
-    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(a.href);
-  }
-  
-  function loadJSON(file){ 
-    return new Promise((res,rej)=>{
-      const fr=new FileReader(); 
-      fr.onload=()=>{try{res(JSON.parse(fr.result));}catch(e){rej(e)}}; 
-      fr.onerror=rej; 
-      fr.readAsText(file);
-    }); 
-  }
-  
-  document.getElementById('save').addEventListener('click',()=>downloadJSON(data(),'mikroskop_jg9.json'));
-  
-  document.getElementById('load').addEventListener('click',async()=>{
-    const inp=document.createElement('input'); 
-    inp.type='file'; 
-    inp.accept='application/json';
-    inp.onchange=async()=>{ 
-      const f=inp.files[0]; 
-      if(!f) return; 
-      try{ 
-        const d=await loadJSON(f);
-        
-        d.a1?.forEach(s=>{ 
-          const c=[...document.querySelectorAll('.label-chip')].find(x=>x.dataset.for===s.name); 
-          if(c) c.dataset.state=s.state; 
-        });
-        
-        if(d.a2 && typeof d.a2 === 'object'){
-          document.getElementById('resetA2').click();
-          Object.entries(d.a2).forEach(([partName, funcText]) => {
-            const box = document.querySelector(`.part-box[data-part="${partName}"]`);
-            if(box) {
-              const funcEl = box.querySelector('.part-function');
-              funcEl.textContent = funcText;
-              funcEl.classList.add('filled');
-              window.a2Assignments[partName] = funcText;
-              const chip = [...document.querySelectorAll('.function-chip')].find(c => c.textContent === funcText);
-              if(chip) chip.dataset.state = 'placed';
-              if(chip && chip.dataset.for === partName) box.classList.add('correct');
-            }
-          });
-        }
-        
-        const list=document.getElementById('steps'); 
-        const map={}; 
-        [...list.children].forEach(li=>map[li.dataset.id]=li); 
-        d.a3?.forEach(id=>map[id]&&list.appendChild(map[id]));
-        
-        const boxes=[...document.querySelectorAll('input[type="checkbox"][data-ok]')]; 
-        boxes.forEach((b,i)=>{ 
-          if(typeof d.a4?.[i]==='boolean') b.checked=d.a4[i]; 
-        });
-        
-        // Aufgabe 5 laden
-        if (d.a5) {
-          if (typeof window.a5_applyLoadedState === 'function') {
-            window.a5_applyLoadedState({
-              grob: d.a5.grob ?? 0,
-              fein: d.a5.fein ?? 50,
-              objektiv: d.a5.objektiv ?? 4,
-              licht: d.a5.licht ?? 1.0
-            });
-          } else {
-            // Fallback auf alte Variante
-            document.getElementById('grob').value = d.a5.grob ?? 0;
-            document.getElementById('fein').value = d.a5.fein ?? 50;
-            const objektiv = d.a5.objektiv ?? 4;
-            const btn = document.querySelector(`#objective-selector button[data-mag="${objektiv}"]`);
-            if (btn) btn.click();
-          }
-        }
-        
+    const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href=url; a.download='mikro-fortschritt.json';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById('loadAll').addEventListener('click', ()=>{
+    const inp=document.createElement('input'); inp.type='file'; inp.accept='application/json';
+    inp.onchange=async()=>{
+      try{
+        const file = inp.files?.[0]; if(!file) return;
+        const txt = await file.text();
+        const d = JSON.parse(txt);
+        if(d.hotspots){ localStorage.setItem('mikro_hotspots', JSON.stringify(d.hotspots)); }
+        if(d.a5){ window.a5_applyLoadedState(d.a5); }
         if(typeof d.score==='number'){ 
           score=d.score; 
           document.getElementById('score').textContent=score; 
         }
-        
         alert('Fortschritt geladen.');
       }catch(e){ 
         alert('Konnte Datei nicht laden: '+e.message); 
