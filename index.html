@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="de">
 <head>
@@ -86,7 +85,7 @@
   .teacher-bar{display:none;margin:.5rem 0 0;gap:.5rem;flex-wrap:wrap;align-items:center}
   .teacher-on .teacher-bar{display:flex}
   .teacher-hint{font-size:.9rem;color:#c7d2fe}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.5rem; align-items: center;}
   .meter{height:12px;background:#182036;border-radius:999px;overflow:hidden;border:1px solid #233054}
   .meter>span{display:block;height:100%;width:0;background:linear-gradient(90deg,#22c55e,#0ea5e9)}
   ol.reorder{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
@@ -136,13 +135,11 @@
 </header>
 
 <main>
-  <!-- Mode Toggle -->
   <div class="mode-toggle">
     <button id="theoryModeBtn" class="btn-theory active">📚 Lernmodus</button>
     <button id="practiceModeBtn" class="btn-practice">✏️ Übungsmodus</button>
   </div>
 
-  <!-- THEORY SECTION -->
   <div class="theory-section">
     <section class="card">
       <h2>🔬 Das Lichtmikroskop — Aufbau und Funktion</h2>
@@ -400,7 +397,6 @@
     </section>
   </div>
 
-  <!-- PRACTICE SECTION -->
   <div class="practice-section">
     <section class="card" id="a1">
       <h2>1) Teile des Mikroskops — Tip-Tap Labeln</h2>
@@ -982,7 +978,7 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
     licht: 1.0             // 0.7 .. 1.3
   };
 
-  // Fallback-Funktion für fehlendes Bild
+  // ########## START: KORRIGIERTER BLOCK 1 (drawFallbackImage) ##########
   function drawFallbackImage(){
     const w = canvas.width, h = canvas.height;
     ctx.clearRect(0,0,w,h);
@@ -999,10 +995,10 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
     const zoomFaktor = window.a5_state.aktuellesObjektiv / 4;
     ctx.translate(w/2, h/2);
     ctx.scale(zoomFaktor, zoomFaktor);
-    ctx.translate(-w/2, -h/2);
+    ctx.translate(-w/2, -w/2); // ZENTRIERUNGS-FIX
     
-    // Blur-Effekt simulieren
-    ctx.filter = `blur(${blur}px) brightness(${window.a5_state.licht})`;
+    // PATCH: Step 1: Apply blur
+    ctx.filter = `blur(${blur}px)`;
     
     // Zeichne simulierte Zellen
     ctx.fillStyle = '#e8d4f0';
@@ -1029,10 +1025,15 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
       ctx.fillStyle = '#e8d4f0';
     }
     
-    ctx.restore();
-    ctx.filter = "none";
+    ctx.restore(); // Restore von scale/blur
+    ctx.filter = "none"; // Filter zurücksetzen
     
-    // Info-Text nur bei starker Unschärfe
+    // PATCH: Step 2: Apply brightness by drawing canvas onto itself
+    ctx.filter = `brightness(${window.a5_state.licht})`;
+    ctx.drawImage(canvas, 0, 0, w, h);
+    ctx.filter = "none"; // Filter zurücksetzen
+    
+    // Info-Text nur bei starker Unschärfe (wird nach allen Effekten gezeichnet)
     if(blur > 10){
       ctx.fillStyle = 'rgba(96,165,250,0.5)';
       ctx.font = '12px system-ui';
@@ -1040,6 +1041,7 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
       ctx.fillText('Fokussiere mit Grob- und Feintrieb', w/2, h-10);
     }
   }
+  // ########## ENDE: KORRIGIERTER BLOCK 1 ##########
 
   // Bild laden
   img.src = "Zelle.png";
@@ -1076,6 +1078,7 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
     return grobWert + feinWert;
   }
 
+  // ########## START: KORRIGIERTER BLOCK 2 (draw) ##########
   function draw(){
     if(!loaded) return;
     
@@ -1102,13 +1105,24 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
     const zoomFaktor = window.a5_state.aktuellesObjektiv / 4;
     ctx.translate(w/2, h/2);
     ctx.scale(zoomFaktor, zoomFaktor);
-    ctx.translate(-w/2, -h/2);
+    ctx.translate(-w/2, -w/2); // ZENTRIERUNGS-FIX
 
-    ctx.filter = `blur(${blur}px) brightness(${brightness}) contrast(${contrast})`;
+    // PATCH: Apply filters in steps for iOS
+    // 1. Apply blur and draw the source image
+    ctx.filter = `blur(${blur}px)`;
     ctx.drawImage(img, 0, 0, w, h);
-    ctx.restore();
-    ctx.filter = "none";
-  }
+    
+    // Transformation zurücksetzen VOR dem Helligkeits-Draw
+    ctx.restore(); 
+    ctx.filter = "none"; 
+    
+    // 2. Apply brightness/contrast and draw the canvas *onto itself*
+    ctx.filter = `brightness(${brightness}) contrast(${contrast})`;
+    ctx.drawImage(canvas, 0, 0, w, h); // Jetzt ohne doppelte Transformation
+
+    ctx.filter = "none"; // Reset filter
+  } // <-- SYNTAX-FIX (fehlende Klammer)
+  // ########## ENDE: KORRIGIERTER BLOCK 2 ##########
 
   // ---------- Interaktives Bild-Overlay ----------
   const overlay = document.querySelector('.microscope-game .game-overlay');
