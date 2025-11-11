@@ -97,8 +97,9 @@
   .focus-controls {display: grid; gap: .5rem 1rem; grid-template-columns: auto 1fr; align-items: center; margin-top:.5rem;}
   .microscope-game{ position:relative; width:100%; max-width:520px; margin:auto; border:1px solid #1f2a44; border-radius:12px; overflow:hidden; background:#0b1324 }
   .microscope-game img{ display:block; width:100%; height:auto }
-  .game-overlay{ position:absolute; inset:0; width:100%; height:100% }
-  .hit{ fill:rgba(96,165,250,.0); stroke:#60a5fa; stroke-dasharray:6 6; stroke-width:2; opacity:.0; cursor:pointer; touch-action:none; }
+  .game-overlay{ position:absolute; inset:0; width:100%; height:100%; touch-action:none; }
+  /* iPad/Safari Touch-Hitfix: sichtbare Pointer-Events trotz „unsichtbarer“ Flächen */
+  .hit{ fill-opacity:0.001; fill:#60a5fa; pointer-events:auto; stroke:#60a5fa; stroke-dasharray:6 6; stroke-width:2; opacity:0.000001; cursor:pointer; touch-action:none; }
   .hit:focus, .hit:hover{ opacity:.25; outline:none }
   .knob-indicator{ position:absolute; width:110px; height:110px; border:2px dashed #60a5fa;
     border-radius:50%; top:68.7%; left:74.8%; transform:translate(-50%,-50%) rotate(0deg); pointer-events:none; opacity:.6 }
@@ -503,7 +504,7 @@
 
       <div class="grid2">
         <div class="microscope-game" id="microscopeGame" aria-label="Interaktives Mikroskop-Bild zur Steuerung">
-          <img src="mikroskop_game.png" onerror="this.onerror=null;this.src='mirkoskop_game.png';" alt="Mikroskop mit Grob- und Feintrieb (rechts), Revolver (über dem Tisch) und Lampe (links unten)."/>
+          <img src="mikroskop_game.png" alt="Mikroskop mit Grob- und Feintrieb (rechts), Revolver (über dem Tisch) und Lampe (links unten)."/>
           <svg class="game-overlay" viewBox="0 0 1000 1500" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
             <circle class="hit" data-control="grob" cx="748" cy="1030" r="145"></circle>
             <circle class="hit" data-control="fein" cx="748" cy="1030" r="55"></circle>
@@ -514,7 +515,7 @@
           <div class="knob-indicator" id="grobAngle" aria-hidden="true"></div>
           <div class="knob-indicator small" id="feinAngle" aria-hidden="true"></div>
           <div class="pill hud">
-            Obj: <b id="hud-obj">4× (40×)</b> · Grob: <b id="hud-g">0%</b> · Fein: <b id="hud-f">0%</b> · Licht: <b id="hud-l">100%</b>
+            Obj: <b id="hud-obj">4× (40×)</b> · Grob: <b id="hud-g">0%</b> · Fein: <b id="hud-f">50%</b> · Licht: <b id="hud-l">100%</b>
           </div>
         </div>
 
@@ -531,7 +532,7 @@
             <label for="grob">Grobtrieb:</label>
             <input id="grob" type="range" min="0" max="100" value="0"/>
             <label for="fein">Feintrieb:</label>
-            <input id="fein" type="range" min="0" max="100" value="0"/>
+            <input id="fein" type="range" min="0" max="100" value="50"/>
             <div id="objective-selector">
               <button class="btn-secondary" data-mag="4">4x</button>
               <button class="btn-secondary" data-mag="10">10x</button>
@@ -571,7 +572,7 @@ practiceBtn.addEventListener('click', () => {
   document.body.className = 'practice-mode';
   practiceBtn.classList.add('active');
   theoryBtn.classList.remove('active');
-  window.dispatchEvent(new Event('resize'));   // <— Canvas neu bemessen
+  window.dispatchEvent(new Event('resize'));   // Canvas neu bemessen
 });
 
 /* ============================================================
@@ -579,7 +580,6 @@ practiceBtn.addEventListener('click', () => {
    ============================================================ */
 const LABELS = ["Okular","Tubus","Revolver","Objektive","Objekttisch","Grobtrieb","Feintrieb","Lichtquelle","Fuß"];
 
-// Hotspots direkt aus der JSON-Datei implementiert
 const DEFAULT_HOTSPOTS = [
   {"name": "Okular", "x": 25.07, "y": 22.54},
   {"name": "Tubus", "x": 33.56, "y": 23.67},
@@ -978,95 +978,15 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
     licht: 1.0             // 0.7 .. 1.3
   };
 
-  // ########## START: KORRIGIERTER BLOCK 1 (drawFallbackImage) ##########
-  function drawFallbackImage(){
-    const w = canvas.width, h = canvas.height;
-    ctx.clearRect(0,0,w,h);
-    
-    // Fokus-Simulation
-    const gesamtFokus = calculateFocus();
-    const zielEbene = 0.55;
-    const abstand = Math.abs(gesamtFokus - zielEbene);
-    const blur = Math.min(20, abstand * (100 + window.a5_state.aktuellesObjektiv * 10));
-    
-    ctx.save();
-    
-    // Zoom mit Objektiv
-    const zoomFaktor = window.a5_state.aktuellesObjektiv / 4;
-    ctx.translate(w/2, h/2);
-    ctx.scale(zoomFaktor, zoomFaktor);
-    ctx.translate(-w/2, -w/2); // ZENTRIERUNGS-FIX
-    
-    // PATCH: Step 1: Apply blur
-    ctx.filter = `blur(${blur}px)`;
-    
-    // Zeichne simulierte Zellen
-    ctx.fillStyle = '#e8d4f0';
-    ctx.strokeStyle = '#8b5cf6';
-    ctx.lineWidth = 2;
-    
-    // Mehrere Zellen zeichnen
-    for(let i = 0; i < 12; i++){
-      const x = (i % 4) * 80 + 60;
-      const y = Math.floor(i / 4) * 80 + 60;
-      const r = 30;
-      
-      ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
-      
-      // Zellkern
-      ctx.fillStyle = '#7c3aed';
-      ctx.beginPath();
-      ctx.arc(x, y, r/3, 0, Math.PI * 2);
-      ctx.fill();
-      
-      ctx.fillStyle = '#e8d4f0';
-    }
-    
-    ctx.restore(); // Restore von scale/blur
-    ctx.filter = "none"; // Filter zurücksetzen
-    
-    // PATCH: Step 2: Apply brightness by drawing canvas onto itself
-    ctx.filter = `brightness(${window.a5_state.licht})`;
-    ctx.drawImage(canvas, 0, 0, w, h);
-    ctx.filter = "none"; // Filter zurücksetzen
-    
-    // Info-Text nur bei starker Unschärfe (wird nach allen Effekten gezeichnet)
-    if(blur > 10){
-      ctx.fillStyle = 'rgba(96,165,250,0.5)';
-      ctx.font = '12px system-ui';
-      ctx.textAlign = 'center';
-      ctx.fillText('Fokussiere mit Grob- und Feintrieb', w/2, h-10);
-    }
-  }
-  // ########## ENDE: KORRIGIERTER BLOCK 1 ##########
-
-  // Bild laden
-  img.src = "Zelle.png";
-  
-  img.onload = ()=>{ 
-    loaded = true;
-    useFallback = false;
-    console.log("Zelle.png erfolgreich geladen");
-    resize(); 
-    draw(); 
-  };
-  
-  img.onerror = ()=>{ 
-    console.warn("Zelle.png nicht gefunden - verwende Fallback-Darstellung");
-    loaded = true;
-    useFallback = true;
-    msg.innerHTML = '<span class="small">Hinweis: Verwende simulierte Zellen. Für realistische Darstellung bitte "Zelle.png" hinzufügen.</span>';
-    resize();
-    draw();
-  };
-
+  // DPR/Retina-Scaling
   function resize(){
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
     const r = canvas.parentElement.getBoundingClientRect();
-    canvas.width = Math.max(320, Math.round(r.width));
-    canvas.height = Math.round(r.height);
+    canvas.style.width = Math.round(r.width) + 'px';
+    canvas.style.height = Math.round(r.height) + 'px';
+    canvas.width = Math.max(320, Math.round(r.width*dpr));
+    canvas.height = Math.max(200, Math.round(r.height*dpr));
+    ctx.setTransform(dpr,0,0,dpr,0,0); // Normalize draw units to CSS pixels
     if(loaded) draw();
   }
   window.addEventListener('resize', resize, {passive:true});
@@ -1078,69 +998,122 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
     return grobWert + feinWert;
   }
 
-  // ########## START: KORRIGIERTER BLOCK 2 (draw) ##########
-  function draw(){
-    if(!loaded) return;
-    
-    if(useFallback){
-      drawFallbackImage();
-      return;
-    }
-    
-    const w = canvas.width, h = canvas.height;
-    ctx.clearRect(0,0,w,h);
+  // Hilfsfunktion: Offscreen Canvas
+  function makeOffscreen(w,h){
+    const c=document.createElement('canvas'); c.width=w; c.height=h; return c.getContext('2d');
+  }
 
-    // Fokus -> Blur
+  // Fallback: simulierte Zellen zeichnen
+  function drawFallbackImage(){
+    const w = canvas.width; const h = canvas.height;
+    ctx.clearRect(0,0,w,h);
     const gesamtFokus = calculateFocus();
     const zielEbene = 0.55;
     const abstand = Math.abs(gesamtFokus - zielEbene);
     const blur = Math.min(20, abstand * (100 + window.a5_state.aktuellesObjektiv * 10));
 
-    // Beleuchtung
+    // Blur in Offscreen
+    const octx = makeOffscreen(w,h);
+    octx.save();
+    const zoomFaktor = window.a5_state.aktuellesObjektiv / 4;
+    octx.translate(w/2, h/2);
+    octx.scale(zoomFaktor, zoomFaktor);
+    octx.translate(-w/2, -h/2);
+    octx.filter = `blur(${blur}px)`;
+
+    // Zellen
+    octx.fillStyle = '#e8d4f0';
+    octx.strokeStyle = '#8b5cf6';
+    octx.lineWidth = 2;
+    for(let i = 0; i < 12; i++){
+      const x = (i % 4) * 80 + 60;
+      const y = Math.floor(i / 4) * 80 + 60;
+      const r = 30;
+      octx.beginPath(); octx.arc(x, y, r, 0, Math.PI*2); octx.fill(); octx.stroke();
+      octx.fillStyle = '#7c3aed'; octx.beginPath(); octx.arc(x, y, r/3, 0, Math.PI*2); octx.fill();
+      octx.fillStyle = '#e8d4f0';
+    }
+    octx.restore();
+
+    // Brightness/Contrast als separater Schritt
     const brightness = window.a5_state.licht;
     const contrast = 1 + (brightness-1)/2;
-    ctx.save();
-    
-    // Zoom mit Objektiv
-    const zoomFaktor = window.a5_state.aktuellesObjektiv / 4;
-    ctx.translate(w/2, h/2);
-    ctx.scale(zoomFaktor, zoomFaktor);
-    ctx.translate(-w/2, -w/2); // ZENTRIERUNGS-FIX
 
-    // PATCH: Apply filters in steps for iOS
-    // 1. Apply blur and draw the source image
-    ctx.filter = `blur(${blur}px)`;
-    ctx.drawImage(img, 0, 0, w, h);
-    
-    // Transformation zurücksetzen VOR dem Helligkeits-Draw
-    ctx.restore(); 
-    ctx.filter = "none"; 
-    
-    // 2. Apply brightness/contrast and draw the canvas *onto itself*
+    // Offscreen -> Main (Helligkeit/Kontrast via Filter beim Draw)
+    ctx.clearRect(0,0,w,h);
     ctx.filter = `brightness(${brightness}) contrast(${contrast})`;
-    ctx.drawImage(canvas, 0, 0, w, h); // Jetzt ohne doppelte Transformation
+    ctx.drawImage(octx.canvas, 0, 0, w, h);
+    ctx.filter = 'none';
 
-    ctx.filter = "none"; // Reset filter
-  } // <-- SYNTAX-FIX (fehlende Klammer)
-  // ########## ENDE: KORRIGIERTER BLOCK 2 ##########
+    if(blur > 10){
+      ctx.fillStyle = 'rgba(96,165,250,0.5)';
+      ctx.font = '12px system-ui';
+      ctx.textAlign = 'center';
+      ctx.fillText('Fokussiere mit Grob- und Feintrieb', w/2, (h/2)/window.devicePixelRatio + 140);
+    }
+  }
+
+  // Bild laden
+  img.src = "Zelle.png";
+  img.onload = ()=>{ 
+    loaded = true; useFallback = false; resize(); draw(); 
+  };
+  img.onerror = ()=>{ 
+    loaded = true; useFallback = true;
+    msg.innerHTML = '<span class="small">Hinweis: Verwende simulierte Zellen. Für realistische Darstellung bitte "Zelle.png" hinzufügen.</span>';
+    resize(); draw();
+  };
+
+  // Hauptzeichnung mit Offscreen-Filterkette (iOS-sicher)
+  function draw(){
+    if(!loaded) return;
+
+    if(useFallback){ drawFallbackImage(); return; }
+
+    const w = canvas.width; const h = canvas.height;
+    ctx.clearRect(0,0,w,h);
+
+    const gesamtFokus = calculateFocus();
+    const zielEbene = 0.55;
+    const abstand = Math.abs(gesamtFokus - zielEbene);
+    const blur = Math.min(20, abstand * (100 + window.a5_state.aktuellesObjektiv * 10));
+    const brightness = window.a5_state.licht;
+    const contrast = 1 + (brightness-1)/2;
+
+    // Schritt 1: Blur + Zoom im Offscreen
+    const o1 = makeOffscreen(w,h);
+    const zoomFaktor = window.a5_state.aktuellesObjektiv / 4;
+    o1.save();
+    o1.translate(w/2, h/2);
+    o1.scale(zoomFaktor, zoomFaktor);
+    o1.translate(-w/2, -h/2);
+    o1.filter = `blur(${blur}px)`;
+    o1.drawImage(img, 0, 0, w, h);
+    o1.restore();
+
+    // Schritt 2: Helligkeit/Kontrast beim Draw auf das Haupt-Canvas
+    ctx.filter = `brightness(${brightness}) contrast(${contrast})`;
+    ctx.drawImage(o1.canvas, 0, 0, w, h);
+    ctx.filter = 'none';
+  }
 
   // ---------- Interaktives Bild-Overlay ----------
   const overlay = document.querySelector('.microscope-game .game-overlay');
   let drag = null; // {type:'grob'|'fein', cx, cy}
 
   function toLocalXY(evt){
-    const svg = overlay;
-    const rect = svg.getBoundingClientRect();
-    const x = (evt.touches ? evt.touches[0].clientX : evt.clientX) - rect.left;
-    const y = (evt.touches ? evt.touches[0].clientY : evt.clientY) - rect.top;
-    // In viewBox-Koordinaten (0..1000, 0..1500) umrechnen
-    const vx = x * (svg.viewBox.baseVal.width / rect.width);
-    const vy = y * (svg.viewBox.baseVal.height / rect.height);
+    const rect = overlay.getBoundingClientRect();
+    const isTouch = evt.touches && evt.touches[0];
+    const clientX = isTouch ? evt.touches[0].clientX : (evt.clientX ?? 0);
+    const clientY = isTouch ? evt.touches[0].clientY : (evt.clientY ?? 0);
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    const vx = x * (overlay.viewBox.baseVal.width / rect.width);
+    const vy = y * (overlay.viewBox.baseVal.height / rect.height);
     return {x:vx, y:vy};
   }
 
   function angleToPercent(angleDeg){
-    // -150° .. +150° -> 0..100%
     const clamped = Math.max(-150, Math.min(150, angleDeg));
     return Math.round(((clamped + 150) / 300) * 100);
   }
@@ -1154,7 +1127,7 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
   }
 
   function setGrobFromAngle(cx, cy, px, py){
-    const angle = Math.atan2(py - cy, px - cx) * 180/Math.PI; // -180..180
+    const angle = Math.atan2(py - cy, px - cx) * 180/Math.PI;
     const val = angleToPercent(angle);
     window.a5_state.grob = val;
     grobSlider.value = val;
@@ -1171,50 +1144,60 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
     updateHUD(); draw();
   }
 
-  overlay.addEventListener('pointerdown', (e)=>{
-    const target = e.target.closest('.hit');
-    if(!target) return;
+  function startDragFromTarget(target, point){
     const type = target.dataset.control;
-
     if(type === 'revolver'){
-      // Objektiv umschalten
       const seq = [4,10,40];
       const idx = seq.indexOf(window.a5_state.aktuellesObjektiv);
       window.a5_state.aktuellesObjektiv = seq[(idx+1)%seq.length];
-      // Buttons (Fallback) syncen
       objectiveButtons.forEach(btn => btn.classList.toggle('active', parseInt(btn.dataset.mag,10)===window.a5_state.aktuellesObjektiv));
-      updateHUD(); draw();
-      return;
+      updateHUD(); draw(); return;
     }
     if(type === 'lampe'){
-      // Lichtstufe toggeln 70% -> 100% -> 130%
       const steps = [0.7,1.0,1.3];
       const i = steps.indexOf(window.a5_state.licht);
       window.a5_state.licht = steps[(i+1)%steps.length];
-      updateHUD(); draw();
-      return;
+      updateHUD(); draw(); return;
     }
-
-    // Drag für Grob/Fein starten
     const bbox = target.getBBox();
     drag = {type, cx:bbox.x + bbox.width/2, cy:bbox.y + bbox.height/2};
-    const p = toLocalXY(e);
-    if(type==='grob') setGrobFromAngle(drag.cx, drag.cy, p.x, p.y);
-    if(type==='fein') setFeinFromAngle(drag.cx, drag.cy, p.x, p.y);
-    overlay.setPointerCapture(e.pointerId);
-  });
+    if(type==='grob') setGrobFromAngle(drag.cx, drag.cy, point.x, point.y);
+    if(type==='fein') setFeinFromAngle(drag.cx, drag.cy, point.x, point.y);
+  }
 
+  // Pointer Events
+  overlay.addEventListener('pointerdown', (e)=>{
+    const target = e.target.closest('.hit'); if(!target) return;
+    const p = toLocalXY(e);
+    startDragFromTarget(target, p);
+    overlay.setPointerCapture?.(e.pointerId);
+  });
   overlay.addEventListener('pointermove', (e)=>{
     if(!drag) return;
     const p = toLocalXY(e);
     if(drag.type==='grob') setGrobFromAngle(drag.cx, drag.cy, p.x, p.y);
     if(drag.type==='fein') setFeinFromAngle(drag.cx, drag.cy, p.x, p.y);
   });
+  const endPointer=()=>{ drag=null; };
+  overlay.addEventListener('pointerup', endPointer);
+  overlay.addEventListener('pointercancel', endPointer);
 
-  overlay.addEventListener('pointerup', ()=>{ drag=null; });
-  overlay.addEventListener('pointercancel', ()=>{ drag=null; });
+  // Touch Fallbacks (iOS-Safari Sicherheit)
+  overlay.addEventListener('touchstart', (e)=>{
+    e.preventDefault();
+    const touch = e.target.closest('.hit'); if(!touch) return;
+    const p = toLocalXY(e);
+    startDragFromTarget(touch, p);
+  }, {passive:false});
+  overlay.addEventListener('touchmove', (e)=>{
+    if(!drag) return; e.preventDefault();
+    const p = toLocalXY(e);
+    if(drag.type==='grob') setGrobFromAngle(drag.cx, drag.cy, p.x, p.y);
+    if(drag.type==='fein') setFeinFromAngle(drag.cx, drag.cy, p.x, p.y);
+  }, {passive:false});
+  overlay.addEventListener('touchend', (e)=>{ e.preventDefault(); drag=null; }, {passive:false});
 
-  // Fallback-Events (Tastatur/Screenreader)
+  // Fallback-Controls (Tastatur/Screenreader)
   grobSlider.addEventListener('input', ()=>{
     if (window.a5_state.aktuellesObjektiv >= 40) alert("VORSICHT! Grobtrieb bei starker Vergrößerung nicht verwenden!");
     window.a5_state.grob = +grobSlider.value;
@@ -1249,166 +1232,43 @@ function addScore(n){ score=Math.max(0,score+n); scoreEl.textContent=score; }
     }
   });
 
-  // API für Save/Load
-  window.a5_applyLoadedState = function(s){
-    if(!s) return;
-    if(typeof s.objektiv==='number') window.a5_state.aktuellesObjektiv = s.objektiv;
-    if(typeof s.grob==='number') window.a5_state.grob = s.grob;
-    if(typeof s.fein==='number') window.a5_state.fein = s.fein;
-    if(typeof s.licht==='number') window.a5_state.licht = s.licht;
-
-    // Fallback-UI syncen
-    grobSlider.value = window.a5_state.grob;
-    feinSlider.value = window.a5_state.fein;
-    const btn = document.querySelector(`#objective-selector button[data-mag="${window.a5_state.aktuellesObjektiv}"]`);
-    if(btn){
-      document.querySelectorAll('#objective-selector button').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-    }
-
-    // Indikatoren aktualisieren
-    grobAngle.style.transform = `translate(-50%,-50%) rotate(${(window.a5_state.grob/100)*300-150}deg)`;
-    feinAngle.style.transform = `translate(-50%,-50%) rotate(${(window.a5_state.fein/100)*300-150}deg)`;
-    updateHUD(); draw();
-  };
-
-  // Initialisierung
-  function initUI(){
-    // Default 4x aktiv
-    document.querySelector('#objective-selector button[data-mag="4"]').classList.add('active');
-    updateHUD();
-    // Indikator-Position
-    grobAngle.style.transform = `translate(-50%,-50%) rotate(-150deg)`;
-    feinAngle.style.transform = `translate(-50%,-50%) rotate(0deg)`;
-    
-    // Canvas initialisieren
-    resize();
-    
-    // Wenn nach 1 Sekunde kein Bild geladen wurde, Fallback zeichnen
-    setTimeout(() => {
-      if(!loaded){
-        console.warn("Bild konnte nicht geladen werden, verwende Fallback");
-        drawFallbackImage();
-      }
-    }, 1000);
-  }
-  initUI();
+  // Initialisieren
+  updateHUD();
+  resize();
 })();
-
-/* =================== SAVE/LOAD Fortschritt =================== */
+  
+/* =================== SAVE / LOAD =================== */
 (function(){
-  function data(){
-    const a1=[...document.querySelectorAll('.label-chip')].map(c=>({name:c.dataset.for, state:c.dataset.state||'idle'}));
-    
-    const a2={};
-    document.querySelectorAll('.part-box').forEach(box => {
-      const funcText = box.querySelector('.part-function').textContent;
-      const emptyText = box.querySelector('.part-function').dataset.empty;
-      if(funcText && funcText !== emptyText) {
-        a2[box.dataset.part] = funcText;
-      }
-    });
-    
-    const a3=[...document.querySelectorAll('#steps .step')].map(li=>li.dataset.id);
-    const a4=[...document.querySelectorAll('input[type="checkbox"][data-ok]')].map(x=>x.checked);
-    
-    // Aufgabe 5 Zustand (jetzt aus a5_state)
-    const a5 = {
-        grob: window.a5_state?.grob ?? +document.getElementById('grob').value,
-        fein: window.a5_state?.fein ?? +document.getElementById('fein').value,
-        objektiv: window.a5_state?.aktuellesObjektiv ?? 4,
-        licht: window.a5_state?.licht ?? 1.0
+  const saveBtn=document.getElementById('save');
+  const loadBtn=document.getElementById('load');
+
+  function gatherState(){
+    return {
+      score,
+      a2: window.a2Assignments || {},
+      a5: window.a5_state || {}
     };
-    
-    return {a1,a2,a3,a4,a5,score};
   }
-  
-  function downloadJSON(obj, filename){
-    const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});
-    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename||'mikroskop_jg9.json';
+  function applyState(st){
+    try{
+      if(st.score!=null){ score=st.score; document.getElementById('score').textContent=score; }
+      if(st.a2){ window.a2Assignments = st.a2; }
+      if(st.a5){ window.a5_state = Object.assign(window.a5_state||{}, st.a5); }
+      window.dispatchEvent(new Event('resize'));
+    }catch(e){}
+  }
+
+  saveBtn.addEventListener('click', ()=>{
+    const data = JSON.stringify(gatherState());
+    const blob = new Blob([data], {type:'application/json'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='mikroskop_progress.json';
     document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(a.href);
-  }
-  
-  function loadJSON(file){ 
-    return new Promise((res,rej)=>{
-      const fr=new FileReader(); 
-      fr.onload=()=>{try{res(JSON.parse(fr.result));}catch(e){rej(e)}}; 
-      fr.onerror=rej; 
-      fr.readAsText(file);
-    }); 
-  }
-  
-  document.getElementById('save').addEventListener('click',()=>downloadJSON(data(),'mikroskop_jg9.json'));
-  
-  document.getElementById('load').addEventListener('click',async()=>{
-    const inp=document.createElement('input'); 
-    inp.type='file'; 
-    inp.accept='application/json';
-    inp.onchange=async()=>{ 
-      const f=inp.files[0]; 
-      if(!f) return; 
-      try{ 
-        const d=await loadJSON(f);
-        
-        d.a1?.forEach(s=>{ 
-          const c=[...document.querySelectorAll('.label-chip')].find(x=>x.dataset.for===s.name); 
-          if(c) c.dataset.state=s.state; 
-        });
-        
-        if(d.a2 && typeof d.a2 === 'object'){
-          document.getElementById('resetA2').click();
-          Object.entries(d.a2).forEach(([partName, funcText]) => {
-            const box = document.querySelector(`.part-box[data-part="${partName}"]`);
-            if(box) {
-              const funcEl = box.querySelector('.part-function');
-              funcEl.textContent = funcText;
-              funcEl.classList.add('filled');
-              window.a2Assignments[partName] = funcText;
-              const chip = [...document.querySelectorAll('.function-chip')].find(c => c.textContent === funcText);
-              if(chip) chip.dataset.state = 'placed';
-              if(chip && chip.dataset.for === partName) box.classList.add('correct');
-            }
-          });
-        }
-        
-        const list=document.getElementById('steps'); 
-        const map={}; 
-        [...list.children].forEach(li=>map[li.dataset.id]=li); 
-        d.a3?.forEach(id=>map[id]&&list.appendChild(map[id]));
-        
-        const boxes=[...document.querySelectorAll('input[type="checkbox"][data-ok]')]; 
-        boxes.forEach((b,i)=>{ 
-          if(typeof d.a4?.[i]==='boolean') b.checked=d.a4[i]; 
-        });
-        
-        // Aufgabe 5 laden
-        if (d.a5) {
-          if (typeof window.a5_applyLoadedState === 'function') {
-            window.a5_applyLoadedState({
-              grob: d.a5.grob ?? 0,
-              fein: d.a5.fein ?? 50,
-              objektiv: d.a5.objektiv ?? 4,
-              licht: d.a5.licht ?? 1.0
-            });
-          } else {
-            // Fallback auf alte Variante
-            document.getElementById('grob').value = d.a5.grob ?? 0;
-            document.getElementById('fein').value = d.a5.fein ?? 50;
-            const objektiv = d.a5.objektiv ?? 4;
-            const btn = document.querySelector(`#objective-selector button[data-mag="${objektiv}"]`);
-            if (btn) btn.click();
-          }
-        }
-        
-        if(typeof d.score==='number'){ 
-          score=d.score; 
-          document.getElementById('score').textContent=score; 
-        }
-        
-        alert('Fortschritt geladen.');
-      }catch(e){ 
-        alert('Konnte Datei nicht laden: '+e.message); 
-      }
+  });
+
+  loadBtn.addEventListener('click', ()=>{
+    const inp=document.createElement('input'); inp.type='file'; inp.accept='application/json';
+    inp.onchange=async()=>{ const f=inp.files[0]; if(!f) return; const txt=await f.text();
+      try{ const data=JSON.parse(txt); applyState(data); }catch(e){ alert('Fehler beim Laden: '+e.message); }
     };
     inp.click();
   });
